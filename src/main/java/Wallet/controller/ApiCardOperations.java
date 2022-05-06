@@ -11,7 +11,6 @@ public class ApiCardOperations {
 
     @PostMapping("/addCard")
     private String addCard(@RequestBody AddCardRequest addCardRequest) {
-        System.out.println(addCardRequest.getDate() + " " + addCardRequest.getName());
         return "ok";
     }
 

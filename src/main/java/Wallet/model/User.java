@@ -2,6 +2,7 @@ package Wallet.model;
 
 
 import com.sun.istack.NotNull;
+import org.checkerframework.common.aliasing.qual.Unique;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -12,27 +13,36 @@ public class User
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     @Column(columnDefinition = "VARCHAR(255)")
     @NotNull
     private String role;
+
     @Column(columnDefinition = "DATETIME")
     @NotNull
     private Date reg_time;
-    @Column(columnDefinition = "VARCHAR(255)")
+
+    @Column(columnDefinition = "VARCHAR(255)", unique = true)
     @NotNull
     private String username;
-    @Column(columnDefinition = "VARCHAR(255)")
+
+    @Column(columnDefinition = "VARCHAR(255)", unique = true)
     @NotNull
     private String email;
+
     @Column(columnDefinition = "VARCHAR(255)")
     @NotNull
     private String password;
+
     @Column(columnDefinition = "VARCHAR(255)")
     private String code;
+
     @Column(columnDefinition = "TEXT")
     private String photo;
-    private int enabled;
+
     @Column(columnDefinition = "TINYINT")
+    private int enabled;
+
 
     public int getId() {
         return id;
