@@ -1,7 +1,7 @@
 package Wallet.controller;
 
 import Wallet.api.request.AddCardRequest;
-import Wallet.service.AddCardService;
+import Wallet.service.CardService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,16 +9,21 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ApiCardOperations {
 
-    private final AddCardService addCardService;
+    private final CardService cardService;
 
-    public ApiCardOperations(AddCardService addCardService) {
-        this.addCardService = addCardService;
+    public ApiCardOperations(CardService cardService) {
+        this.cardService = cardService;
     }
 
     @PostMapping("/addCard")
     private String addCard(@RequestBody AddCardRequest addCardRequest) {
-        return addCardService.addCard(addCardRequest.getNumber(), addCardRequest.getDate(),
+        return cardService.addCard(addCardRequest.getNumber(), addCardRequest.getDate(),
                 addCardRequest.getName(), addCardRequest.getType());
+    }
+
+    @PostMapping("/userCardsInfo")
+    private String userCardsInfo() {
+        return cardService.cardsUserInfo();
     }
 
 }

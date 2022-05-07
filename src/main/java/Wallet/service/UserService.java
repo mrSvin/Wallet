@@ -18,7 +18,6 @@ public class UserService {
 
     public String addNewUser(String email, String password, String username) {
 
-
         int countUser = userRepository.findUser(username);
         int countEmail = userRepository.findEmail(email);
 

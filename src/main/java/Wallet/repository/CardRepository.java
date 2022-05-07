@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
 import java.util.Date;
+import java.util.List;
 
 @Repository
 public interface CardRepository extends CrudRepository<Card, Integer> {
@@ -21,5 +22,11 @@ public interface CardRepository extends CrudRepository<Card, Integer> {
     void addCard(@Param("add_time") Date add_time, @Param("cash") Integer cash, @Param("date") String date,
                  @Param("name") String name, @Param("number") String number, @Param("type") String type,
                  @Param("user_name") String user_name);
+
+    @Query(value="SELECT COUNT(*) count FROM wallet.cards where number = ?1", nativeQuery = true)
+    public Integer findCardNumber(String cardNumber);
+
+    @Query(value="SELECT * FROM wallet.cards where user_name = ?1", nativeQuery = true)
+    public List<String> findByUserName(String userName);
 
 }
