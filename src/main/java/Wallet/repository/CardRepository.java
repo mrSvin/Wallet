@@ -16,9 +16,10 @@ public interface CardRepository extends CrudRepository<Card, Integer> {
 
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO `wallet`.`cards` (`add_time`, `cash`, `date`, `name`, `number`, `type`) " +
-            "VALUES (?1, ?2, ?3, ?4, ?5, ?6);", nativeQuery = true)
+    @Query(value = "INSERT INTO `wallet`.`cards` (`add_time`, `cash`, `date`, `name`, `number`, `type`, `user_name`) " +
+            "VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7);", nativeQuery = true)
     void addCard(@Param("add_time") Date add_time, @Param("cash") Integer cash, @Param("date") String date,
-                 @Param("name") String name, @Param("number") String number, @Param("type") String type);
+                 @Param("name") String name, @Param("number") String number, @Param("type") String type,
+                 @Param("user_name") String user_name);
 
 }

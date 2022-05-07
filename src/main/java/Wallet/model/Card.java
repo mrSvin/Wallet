@@ -33,6 +33,10 @@ public class Card {
     @Column(columnDefinition = "DATETIME")
     private int add_time;
 
+    @Column(columnDefinition = "VARCHAR(25)")
+    @NotNull
+    private String user_name;
+
     public int getId() {
         return id;
     }
@@ -87,5 +91,13 @@ public class Card {
 
     public void setAdd_time(int add_time) {
         this.add_time = add_time;
+    }
+
+    public String getUser_name() {
+        return user_name;
+    }
+
+    public void setUser_name(String user_name) {
+        this.user_name = user_name;
     }
 }
