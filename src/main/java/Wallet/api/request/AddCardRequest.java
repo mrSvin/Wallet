@@ -2,9 +2,9 @@ package Wallet.api.request;
 
 public class AddCardRequest {
     private String number;
-    private int date;
+    private String date;
     private String name;
-    private int type;
+    private String type;
 
     public String getNumber() {
         return number;
@@ -14,11 +14,11 @@ public class AddCardRequest {
         this.number = number;
     }
 
-    public int getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(int date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -30,11 +30,11 @@ public class AddCardRequest {
         this.name = name;
     }
 
-    public int getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(int type) {
+    public void setType(String type) {
         this.type = type;
     }
 }
