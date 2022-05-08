@@ -3,22 +3,263 @@
 <head>
     <meta charset="utf-8">
     <title>Страница авторизации</title>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600,700&display=swap" rel="stylesheet">
 </head>
 
-<body>
-<div>
-    <form method="POST" action="/login">
-        <h2>Вход в систему</h2>
-        <div>
-            <input name="username" type="text" placeholder="Username"
-                   autofocus="true"/>
-            <input name="password" type="password" placeholder="Password"/>
-            <button type="submit">Log In</button>
-            <input id="remember" type="checkbox" name="remember-me" value="true" style="margin-left: 0px;"/> <label
-                htmlFor="remember" class="remember_me">Запомнить меня</label>
-        </div>
-    </form>
-</div>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: "Montserrat", sans-serif;
+        -webkit-font-smoothing: antialiased;
+        font-weight: 400;
+        font-size: 12px;
+    }
 
+    #login-app {
+        background: url("https://www.xmple.com/wallpaper/purple-gradient-blue-linear-1920x1080-c2-87cefa-da70d6-a-195-f-14.svg");
+        min-height: 100vh;
+        overflow: auto;
+    }
+
+    .box {
+        background: rgba(49, 69, 125, 0.4);
+        color: white;
+        border-radius: 7px;
+        box-shadow: 0 0 50px rgba(0, 0, 0, 0.3);
+        max-width: 300px;
+        min-height: 350px;
+        margin: 50px auto;
+        padding: 50px;
+        opacity: 0;
+        transition: all 10s ease-in;
+    }
+
+    .login, .content {
+        opacity: 1;
+    }
+
+    .error-msg {
+        color: #ff6d6d;
+    }
+
+    input[type=text], input[type=password], input[type=number] {
+        display: block;
+        width: calc(100% - 22px);
+        background: none;
+        color: white;
+        border: 0;
+        border-bottom: 1px solid #d0d0d0;
+        height: 25px;
+        margin-bottom: 15px;
+        padding: 5px 7px 0;
+        outline: none;
+    }
+
+    input[type=text]::placeholder, input[type=password]::placeholder, input[type=number]::placeholder {
+        color: rgba(255, 255, 255, 0.5);
+    }
+
+    input[type=text]:hover::placeholder, input[type=password]:hover::placeholder, input[type=number]:hover::placeholder {
+        text-decoration: underline;
+        color: rgba(255, 255, 255, 0.75);
+    }
+
+    input[type=text]:focus, input[type=password]:focus, input[type=number]:focus {
+        border-bottom: 1px solid #879aca;
+    }
+
+    input[type=text]:focus::placeholder, input[type=password]:focus::placeholder, input[type=number]:focus::placeholder {
+        visibility: hidden;
+    }
+
+    input[type=checkbox] + .label-block {
+        display: block;
+        font-size: 1em;
+        color: white;
+        margin-bottom: 10px;
+        position: relative;
+        user-select: none;
+    }
+
+    input[type=checkbox] + .label-block:before {
+        background: white;
+        border: 1px solid #1c3c50;
+        border-radius: 3px;
+        content: "check_box_outline_blank";
+        display: inline-block;
+        font-size: 14px;
+        font-family: "Material Icons";
+        line-height: 1;
+        margin-right: 10px;
+        position: relative;
+        top: 3px;
+    }
+
+    input[type=checkbox]:checked + .label-block:after {
+        border-radius: 3px;
+        content: "close";
+        font-weight: bold;
+        color: #19289e;
+        display: block;
+        font-size: 16px;
+        font-family: "Material Icons";
+        line-height: 1;
+        position: absolute;
+        top: 3px;
+    }
+
+    .btn {
+        border-radius: 5px;
+        cursor: pointer;
+        padding: 15px 10px;
+        text-align: center;
+        user-select: none;
+    }
+
+    .btn-login {
+        background: rgba(26, 34, 99, 0.5);
+        color: white;
+    }
+
+    .btn-login:hover {
+        background: rgba(26, 34, 99, 0.3);
+    }
+
+    .display-inline-block {
+        display: inline-block !important;
+    }
+
+    .display-block {
+        display: block !important;
+    }
+
+    .display-inline {
+        display: inline !important;
+    }
+
+    .display-none {
+        display: none !important;
+    }
+</style>
+
+<body>
+<div id="login-app"></div>
 </body>
+
+<script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"></script>
+
+<script>
+    class Login extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = {permission: 0};
+            this.login = {
+                username: {
+                    value: "",
+                    handleChange: event => {
+                        this.login.username.value = event.target.value;
+                    }
+                },
+
+                password: {
+                    value: "",
+                    handleChange: event => {
+                        this.login.password.value = event.target.value;
+                    }
+                },
+
+                remember: {
+                    value: "false",
+                    handleChange: event => {
+                        this.login.remember.value = event.target.value;
+                    }
+                },
+
+                login: {
+                    loginHandle: async () => {
+                        if (this.login.username.value && this.login.password.value.length >= 3) {
+
+                            let response = await fetch('/login?' + "username=" + this.login.username.value + "&password=" + this.login.password.value
+                                + "&remember-me=" + this.login.remember.value, {
+                                method: 'POST',
+                            })
+                            if (response.ok) {
+                                window.location.href="/"
+                            }
+                        } else {
+                            this.setState({permission: 0, error: 1});
+                        }
+                    }
+                },
+
+            };
+
+
+            this.login.username.handleChange = this.login.username.handleChange.bind(this);
+            this.login.password.handleChange = this.login.password.handleChange.bind(this);
+            this.login.remember.handleChange = this.login.remember.handleChange.bind(this);
+
+        }
+
+        render() {
+            let errormessage = /*#__PURE__*/React.createElement("p", {class: "error-msg"}, " Invalid login attempt! ");
+            let loginForm = /*#__PURE__*/
+                React.createElement("div", null,
+                    React.createElement("input", {
+                        type: "text",
+                        tabindex: "1",
+                        placeholder: "Username",
+                        onChange: this.login.username.handleChange
+                    }),
+                    React.createElement("input", {
+                        type: "password",
+                        tabindex: "1",
+                        placeholder: "Password",
+                        onChange: this.login.password.handleChange
+                    }),
+                    this.state.error ? errormessage : null,
+                    React.createElement("input", {
+                        id: "abc",
+                        name: "remember-me",
+                        value: "true",
+                        type: "checkbox",
+                        class: "display-none",
+                        onChange: this.login.remember.handleChange
+                    }),
+                    React.createElement("label", {
+                        for: "abc",
+                        class: "label-block checkbox"
+                    }, "Remember me"),
+
+
+                    React.createElement("div", {
+                        class: "btn btn-login",
+                        onClick: this.login.login.loginHandle
+                    }, "Login"));
+
+
+            return (
+                React.createElement("div", {
+                        className: `box ${this.state.permission ? 'content' : 'login'}`
+                    },
+
+                    this.state.permission ? content : loginForm));
+
+
+        }
+    }
+
+    class App extends React.Component {
+        render() {
+            return React.createElement(Login, null);
+        }
+    };
+    ReactDOM.render(React.createElement(App, null), document.getElementById('login-app'));
+</script>
+
 </html>
