@@ -27,7 +27,7 @@ public class Card {
     @NotNull
     private String type;
 
-    @Column(columnDefinition = "TINYINT")
+    @Column(columnDefinition = "INT")
     private int cash;
 
     @Column(columnDefinition = "DATETIME")

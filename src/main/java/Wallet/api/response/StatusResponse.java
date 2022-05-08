@@ -1,4 +1,4 @@
 package Wallet.api.response;
 
-public class statusResponse {
+public class StatusResponse {
 }

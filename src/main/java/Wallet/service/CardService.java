@@ -6,6 +6,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.net.Authenticator;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -48,12 +49,19 @@ public class CardService {
         return "ok";
     }
 
-    public String cardsUserInfo() {
+    public List<String> cardsUserInfo() {
 
         String username = getUserName();
-        List<String> result = cardRepository.findByUserName(username);
-        result.stream().forEach(r->System.out.println(r));
-        return "ok";
+        List<String> result = new ArrayList<>();
+
+        if (username.equals("anonymousUser") == true) {
+            result.add("пользователь не авторизирован");
+            return result;
+        } else {
+            result = cardRepository.findByUserName(username);
+        }
+
+        return result;
     }
 
     private String getUserName() {
