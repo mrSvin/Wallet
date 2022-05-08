@@ -34,4 +34,10 @@ public interface CardRepository extends CrudRepository<Card, Integer> {
     @Query(value = "UPDATE wallet.cards set cash = cash +(?1) where number = ?2", nativeQuery = true)
     void changeMoneyCard(@Param("changeCash") Integer changeCash, @Param("cardNumber") String cardNumber);
 
+    @Query(value="SELECT COUNT(*) count FROM wallet.cards where number = ?1 AND user_name = ?2", nativeQuery = true)
+    public Integer findCardNumberUser(String cardNumber, String user_name);
+
+    @Query(value="SELECT cash FROM wallet.cards where number = ?1", nativeQuery = true)
+    public Integer balanceCardInfo(String cardNumber);
+
 }

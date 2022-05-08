@@ -26,6 +26,15 @@ public class TransactionService {
         if (username.equals("anonymousUser") == true) {
             return "пользователь не авторизирован";
         }
+        if (cardRepository.findCardNumberUser(sender, username) ==0) {
+            return "Юзер не владеет картой, с которой списываются средства";
+        }
+        if (cardRepository.findCardNumber(recipient) == 0) {
+            return "Карта получателя отсутствует в базе";
+        }
+        if (cardRepository.balanceCardInfo(sender)< cashSend) {
+            return "На карте недостаточно средств";
+        }
 
         Date date = new Date();
         transctionRepository.addTransaction(recipient,sender, date, cashSend);
