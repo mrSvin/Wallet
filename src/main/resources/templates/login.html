@@ -11,6 +11,7 @@
 
     <script crossorigin src="/js/react.development.js"></script>
     <script crossorigin src="/js/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
 
 
@@ -19,8 +20,8 @@
 </body>
 
 
+<script type="text/babel">
 
-<script>
     class Login extends React.Component {
         constructor(props) {
             super(props);
@@ -28,105 +29,123 @@
             this.login = {
                 username: {
                     value: "",
-                    handleChange: event => {
+                    handleChange: (event) => {
                         this.login.username.value = event.target.value;
                     }
                 },
-
                 password: {
                     value: "",
-                    handleChange: event => {
+                    handleChange: (event) => {
                         this.login.password.value = event.target.value;
                     }
                 },
-
                 remember: {
-                    value: "false",
-                    handleChange: event => {
-                        this.login.remember.value = event.target.value;
+                    value: false,
+                    handleChange: () => {
+                        if (this.login.remember.value == "true") {
+                            this.login.remember.value = "false"
+                        } else {
+                            this.login.remember.value = "true";
+                        }
                     }
                 },
 
                 login: {
                     loginHandle: async () => {
-                        if (this.login.username.value && this.login.password.value.length >= 3) {
+                        if (
+                            this.login.username.value &&
+                            this.login.password.value.length >= 3
+                        ) {
 
-                            let response = await fetch('/login?' + "username=" + this.login.username.value + "&password=" + this.login.password.value
-                                + "&remember-me=" + this.login.remember.value, {
+                            let response = await fetch('/login?' + "username=" + this.login.username.value + "&password=" +
+                                this.login.password.value + "&remember-me=" + this.login.remember.value, {
                                 method: 'POST',
                             })
                             if (response.ok) {
-                                window.location.href="/"
+                                window.location.href = "/"
                             }
+
                         } else {
                             this.setState({permission: 0, error: 1});
                         }
                     }
                 },
-
+                logout: {
+                    logoutHandle: () => {
+                        this.login.username.value = "";
+                        this.login.password.value = "";
+                        this.setState({permission: 0, error: 0});
+                    }
+                }
             };
-
 
             this.login.username.handleChange = this.login.username.handleChange.bind(this);
             this.login.password.handleChange = this.login.password.handleChange.bind(this);
             this.login.remember.handleChange = this.login.remember.handleChange.bind(this);
-
         }
 
         render() {
-            let errormessage = /*#__PURE__*/React.createElement("p", {class: "error-msg"}, " Invalid login attempt! ");
-            let loginForm = /*#__PURE__*/
-                React.createElement("div", null,
-                    React.createElement("input", {
-                        type: "text",
-                        tabindex: "1",
-                        placeholder: "Username",
-                        onChange: this.login.username.handleChange
-                    }),
-                    React.createElement("input", {
-                        type: "password",
-                        tabindex: "1",
-                        placeholder: "Password",
-                        onChange: this.login.password.handleChange
-                    }),
-                    this.state.error ? errormessage : null,
-                    React.createElement("input", {
-                        id: "abc",
-                        name: "remember-me",
-                        value: "true",
-                        type: "checkbox",
-                        class: "display-none",
-                        onChange: this.login.remember.handleChange
-                    }),
-                    React.createElement("label", {
-                        for: "abc",
-                        class: "label-block checkbox"
-                    }, "Remember me"),
+            let errormessage = <p class="error-msg"> Invalid login attempt! </p>;
+            let loginForm = (
+                <div>
+                    <input
+                        type="text"
+                        tabindex="1"
+                        placeholder="Username"
+                        onChange={this.login.username.handleChange}
+                    />
+                    <input
+                        type="password"
+                        tabindex="1"
+                        placeholder="Password"
+                        onChange={this.login.password.handleChange}
+                    />
+                    {this.state.error ? errormessage : null}
+                    <input
+                        id="abc"
+                        name="remember"
+                        value="true"
+                        type="checkbox"
+                        class="display-none"
+                        onClick= {this.login.remember.handleChange}
+                    />
+                    <label
+                        for="abc"
+                        class="label-block checkbox">
+                        Remember me
+                    </label>
+                    <div class="btn btn-login" onClick={this.login.login.loginHandle}>
+                        Login
+                    </div>
+                </div>
+            );
 
-
-                    React.createElement("div", {
-                        class: "btn btn-login",
-                        onClick: this.login.login.loginHandle
-                    }, "Login"));
-
+            let content = (
+                <div>
+                    <h2>Wellcome!</h2>
+                    <div class="btn btn-login" onClick={this.login.logout.logoutHandle}>
+                        Logout
+                    </div>
+                </div>
+            );
 
             return (
-                React.createElement("div", {
-                        className: `box ${this.state.permission ? 'content' : 'login'}`
-                    },
-
-                    this.state.permission ? content : loginForm));
-
-
+                <div className={`box ${this.state.permission ? "content" : "login"}`}>
+                    {this.state.permission ? content : loginForm}
+                </div>
+            );
         }
     }
 
     class App extends React.Component {
         render() {
-            return React.createElement(Login, null);
+            return <Login/>;
         }
-    };
-    ReactDOM.render(React.createElement(App, null), document.getElementById('login-app'));
+    }
+
+    ReactDOM.render(<App/>, document.getElementById("login-app"));
+
+
 </script>
 
 </html>
