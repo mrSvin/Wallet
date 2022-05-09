@@ -67,8 +67,23 @@
                                 this.login.password.value + "&remember-me=" + this.login.remember.value, {
                                 method: 'POST',
                             })
+
                             if (response.ok) {
-                                window.location.href = "/"
+                                this.setState({permission: 0, error: 0});
+                                document.getElementById("login-btn").style.display = "none";
+                                document.getElementById("registration-btn").style.display = "none";
+
+                                setTimeout(() => {
+                                    let badLogin = window.location.protocol + '//' + window.location.hostname + ":8082/login?error";
+                                    if (response.url != badLogin) {
+                                        window.location.href = "/"
+                                    } else {
+                                        this.setState({permission: 0, error: 1});
+                                    }
+                                    document.getElementById("login-btn").style.display = "block";
+                                    document.getElementById("registration-btn").style.display = "block";
+                                }, 100);
+
                             }
 
                         } else {
@@ -124,7 +139,7 @@
         }
 
         render() {
-
+            let errormessage = <p class="error-msg"> Invalid login attempt! </p>;
             let loginForm = (
                 <div>
                     <input
@@ -153,10 +168,14 @@
                         class="label-block checkbox">
                         Remember me
                     </label>
-                    <div class="btn btn-login" onClick={this.login.login.loginHandle}>
+                    <div
+                        id="login-btn"
+                        class="btn btn-login" onClick={this.login.login.loginHandle}>
                         Login
                     </div>
-                    <div className="btn btn-registration" onClick={this.login.registration.registrationHandle}>
+                    <div
+                        id="registration-btn"
+                        className="btn btn-registration" onClick={this.login.registration.registrationHandle}>
                         Registration
                     </div>
                 </div>

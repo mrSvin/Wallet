@@ -115,6 +115,10 @@ input[type=checkbox]:checked + .label-block:after {
     color: white;
 }
 
+.btn-login.load {
+    padding: 15px 6px;
+}
+
 .btn-login:hover {
     background: rgba(26, 34, 99, 0.3);
 }
