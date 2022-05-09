@@ -49,6 +49,12 @@
                         }
                     }
                 },
+                email: {
+                    value: "",
+                    handleChange: (event) => {
+                        this.login.email.value = event.target.value;
+                    }
+                },
 
                 login: {
                     loginHandle: async () => {
@@ -73,16 +79,38 @@
 
                 registration: {
                     registrationHandle: () => {
-                        console.log("click")
                         this.setState({permission: 1, error: 0});
                     }
                 },
 
-                logout: {
-                    registrationHandle: () => {
-                        this.login.username.value = "";
-                        this.login.password.value = "";
-                        this.setState({permission: 0, error: 0});
+                addUser: {
+                    handleChange: async () => {
+
+                        var raw = JSON.stringify({
+                            email: this.login.email.value,
+                            password: this.login.password.value,
+                            username: this.login.username.value
+                        });
+
+                        let response = await fetch("/addUser", {
+                            method: 'POST',
+                            headers: {'Content-Type': 'application/json'},
+                            body: raw
+                        })
+
+                        if (response.ok) {
+                            let textResponse = (await response.text()).valueOf()
+                            if (textResponse == "Имя занято") {
+                                alert("Имя занято")
+                            } else if (textResponse == "Почта занята") {
+                                alert("Почта занята")
+                            } else {
+                                alert("Пользователь добавлен")
+                            }
+
+                        }
+
+
                     }
                 }
             };
@@ -90,11 +118,13 @@
             this.login.username.handleChange = this.login.username.handleChange.bind(this);
             this.login.password.handleChange = this.login.password.handleChange.bind(this);
             this.login.remember.handleChange = this.login.remember.handleChange.bind(this);
+            this.login.email.handleChange = this.login.email.handleChange.bind(this);
             this.login.registration.registrationHandle = this.login.registration.registrationHandle.bind(this);
+            this.login.addUser.handleChange = this.login.addUser.handleChange.bind(this);
         }
 
         render() {
-            let errormessage = <p class="error-msg"> Invalid login attempt! </p>;
+
             let loginForm = (
                 <div>
                     <input
@@ -116,7 +146,7 @@
                         value="true"
                         type="checkbox"
                         class="display-none"
-                        onClick= {this.login.remember.handleChange}
+                        onClick={this.login.remember.handleChange}
                     />
                     <label
                         for="abc"
@@ -137,25 +167,25 @@
                     <h2>Registration user</h2>
                     <input
                         type="text"
-                        tabindex="1"
+                        tabindex="2"
                         placeholder="Username"
                         onChange={this.login.username.handleChange}
                     />
                     <input
                         type="password"
-                        tabindex="1"
+                        tabindex="2"
                         placeholder="Password"
                         onChange={this.login.password.handleChange}
                     />
                     <input
                         type="text"
-                        tabIndex="1"
+                        tabIndex="2"
                         placeholder="Email"
-
+                        onChange={this.login.email.handleChange}
                     />
 
                     {this.state.error ? errormessage : null}
-                    <div class="btn btn-login" onClick={this.login.logout.logoutHandle}>
+                    <div class="btn btn-login" onClick={this.login.addUser.handleChange}>
                         Зарегистрироваться
                     </div>
                 </div>
