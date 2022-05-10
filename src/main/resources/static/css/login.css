@@ -26,7 +26,7 @@ body {
     transition: all 10s ease-in;
 }
 
-.login, .content {
+.login, .registration {
     opacity: 1;
 }
 
@@ -113,10 +113,6 @@ input[type=checkbox]:checked + .label-block:after {
 .btn-login {
     background: rgba(26, 34, 99, 0.5);
     color: white;
-}
-
-.btn-login.load {
-    padding: 15px 6px;
 }
 
 .btn-login:hover {
