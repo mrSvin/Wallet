@@ -143,3 +143,8 @@ input[type=checkbox]:checked + .label-block:after {
 .display-none {
     display: none !important;
 }
+
+h2 {
+    width: 100%;
+    text-align:center;
+}

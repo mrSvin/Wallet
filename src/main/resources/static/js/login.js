@@ -29,10 +29,7 @@ class Login extends React.Component {
 
             login: {
                 loginHandle: async () => {
-                    if (
-                        this.login.username.value &&
-                        this.login.password.value.length >= 3
-                    ) {
+                    if (this.login.username.value.length >= 3 && this.login.password.value.length >= 3) {
 
                         let response = await fetch('/login?' + "username=" + this.login.username.value + "&password=" +
                             this.login.password.value + "&remember-me=" + this.login.remember.value, {
@@ -50,6 +47,7 @@ class Login extends React.Component {
                                     window.location.href = "/"
                                 } else {
                                     this.setState({permission: 0, error: 1});
+                                    document.getElementById("errorMsg").innerHTML = "Логин или пароль введены не верно"
                                 }
                                 document.getElementById("login-btn").style.display = "block";
                                 document.getElementById("registration-btn").style.display = "block";
@@ -59,6 +57,7 @@ class Login extends React.Component {
 
                     } else {
                         this.setState({permission: 0, error: 1});
+                        document.getElementById("errorMsg").innerHTML = "Логин или пароль слишком короткие"
                     }
                 }
             },
@@ -94,36 +93,55 @@ class Login extends React.Component {
                 }
             },
 
+            return: {
+                handleChange: () => {
+                    this.setState({permission: 0, error: 0});
+                }
+            },
+
             addUser: {
                 handleChange: async () => {
+                    if (this.registration.username.value.length >= 3 && this.registration.password.value.length >= 3 && this.registration.email.value.length >= 3) {
+                        var raw = JSON.stringify({
+                            email: this.registration.email.value,
+                            password: this.registration.password.value,
+                            username: this.registration.username.value
+                        });
 
-                    var raw = JSON.stringify({
-                        email: this.registration.email.value,
-                        password: this.registration.password.value,
-                        username: this.registration.username.value
-                    });
+                        let response = await fetch("/addUser", {
+                            method: 'POST',
+                            headers: {'Content-Type': 'application/json'},
+                            body: raw
+                        })
 
-                    let response = await fetch("/addUser", {
-                        method: 'POST',
-                        headers: {'Content-Type': 'application/json'},
-                        body: raw
-                    })
+                        if (response.ok) {
+                            let textResponse = (await response.text()).valueOf()
+                            if (textResponse == "Имя занято") {
+                                this.setState({permission: 1, error: 1});
+                                document.getElementById("errorMsg").innerHTML = "Имя занятно"
+                            } else if (textResponse == "Почта занята") {
+                                this.setState({permission: 1, error: 1});
+                                document.getElementById("errorMsg").innerHTML = "Почта занята"
+                            } else {
+                                this.setState({permission: 2, error: 0});
+                            }
 
-                    if (response.ok) {
-                        let textResponse = (await response.text()).valueOf()
-                        if (textResponse == "Имя занято") {
-                            this.setState({permission: 1, error: 1});
-                            document.getElementById("errorMsg").innerHTML = "Имя занятно"
-                        } else if (textResponse == "Почта занята") {
-                            this.setState({permission: 1, error: 1});
-                            document.getElementById("errorMsg").innerHTML = "Почта занята"
-                        } else {
-                            alert("Пользователь добавлен")
                         }
 
+                    } else {
+                        this.setState({permission: 1, error: 1});
+                        setTimeout(() => {
+                            if (this.registration.username.value.length < 3) {
+                                document.getElementById("errorMsg").innerHTML = "Логин слишком короткий"
+                            }
+                            if (this.registration.password.value.length < 3) {
+                                document.getElementById("errorMsg").innerHTML = "Пароль слишком короткий"
+                            }
+                            if (this.registration.email.value.length < 3) {
+                                document.getElementById("errorMsg").innerHTML = "Почта введена некорректно"
+                            }
+                        }, 10);
                     }
-
-
                 }
             }
         };
@@ -132,81 +150,96 @@ class Login extends React.Component {
 
     render() {
         let errormessage =
-    <p
-        id="errorMsg"
-    class="error-msg"> Неверно пользователь или пароль
-        </p>;
+            <p
+                id="errorMsg"
+                class="error-msg"> Логин или пароль слишком короткие
+            </p>;
         let loginForm = (
             <div>
-            <input
-        type="text"
-        tabindex="1"
-        placeholder="Username"
-        onChange={this.login.username.handleChange}
-        />
-        <input
-        type="password"
-        tabindex="1"
-        placeholder="Password"
-        onChange={this.login.password.handleChange}
-        />
-        {this.state.error ? errormessage : null}
-    <input
-        id="abc"
-        name="remember"
-        type="checkbox"
-    class="display-none"
-        onClick={this.login.remember.handleChange}
-        />
-        <label
-        for="abc"
-            class="label-block checkbox">
-            Remember me
-        </label>
-        <div
-        id="login-btn"
-    class="btn btn-login" onClick={this.login.login.loginHandle}>
-            Login
+                <h2>Авторизация</h2>
+                <input
+                    type="text"
+                    tabindex="1"
+                    placeholder="Username"
+                    onChange={this.login.username.handleChange}
+                />
+                <input
+                    type="password"
+                    tabindex="1"
+                    placeholder="Password"
+                    onChange={this.login.password.handleChange}
+                />
+                {this.state.error ? errormessage : null}
+                <input
+                    id="abc"
+                    name="remember"
+                    type="checkbox"
+                    class="display-none"
+                    onClick={this.login.remember.handleChange}
+                />
+                <label
+                    for="abc"
+                    class="label-block checkbox">
+                    Запомнить меня
+                </label>
+                <div
+                    id="login-btn"
+                    class="btn btn-login" onClick={this.login.login.loginHandle}>
+                    Авторизация
+                </div>
+                <div
+                    id="registration-btn"
+                    className="btn btn-registration" onClick={this.login.registration.registrationHandle}>
+                    Регистрация
+                </div>
             </div>
-            <div
-        id="registration-btn"
-        className="btn btn-registration" onClick={this.login.registration.registrationHandle}>
-            Registration
-            </div>
-            </div>
-    );
+        );
 
         let registrationForm = (
-            <div>
-            <h2>Registration user</h2>
-        <input
-        type="text"
-        placeholder="Username"
-        onChange={this.registration.username.handleChange}
-        />
-        <input
-        type="password"
-        placeholder="Password"
-        onChange={this.registration.password.handleChange}
-        />
-        <input
-        type="text"
-        placeholder="Email"
-        onChange={this.registration.email.handleChange}
-        />
+            this.state.permission != 2 ?
+                <div>
+                    <h2>Регистрация нового пользователя</h2>
+                    <input
+                        type="text"
+                        placeholder="Username"
+                        onChange={this.registration.username.handleChange}
+                    />
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        onChange={this.registration.password.handleChange}
+                    />
+                    <input
+                        type="text"
+                        placeholder="Email"
+                        onChange={this.registration.email.handleChange}
+                    />
 
-        {this.state.error ? errormessage : null}
-    <div class="btn btn-login" onClick={this.registration.addUser.handleChange}>
-            Зарегистрироваться
-            </div>
-            </div>
-    );
+                    {this.state.error ? errormessage : null}
+                    <div class="btn btn-login" onClick={this.registration.addUser.handleChange}>
+                        Зарегистрироваться
+                    </div>
+                </div>
+                :
+                <div>
+                    <h2>Регистрация успешно завершена!</h2>
+                    <div className="btn btn-login" onClick={this.registration.return.handleChange}>
+                        Вернуться к авторизации
+                    </div>
+                </div>
+        );
 
         return (
-            <div className={`box ${this.state.permission ? "registration" : "login"}`}>
-        {this.state.permission ? registrationForm : loginForm}
-    </div>
-    );
+            <div className={
+                `box ${
+                    this.state.permission == 0 ? "login" : "registration"
+                }`
+            }>
+                {
+                    this.state.permission == 0 ? loginForm : registrationForm
+                }
+            </div>
+        );
     }
 }
 
