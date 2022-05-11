@@ -11,6 +11,7 @@
 </head>
 
 
+
 <body>
 <div id="main-app">
 </div>
@@ -38,6 +39,10 @@
                 this.main.cards.value = data
                 this.setState({permission: 0});
 
+                // Create element:
+                const para = document.createElement("h1");
+                para.innerText = "test";
+                document.body.appendChild(para);
             }
         }
 
