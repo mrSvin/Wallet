@@ -122,6 +122,9 @@ class Login extends React.Component {
                             } else if (textResponse == "Почта занята") {
                                 this.setState({permission: 1, error: 1});
                                 document.getElementById("errorMsg").innerHTML = "Почта занята"
+                            } else if (textResponse == "Почта введена некорректно") {
+                                this.setState({permission: 1, error: 1});
+                                document.getElementById("errorMsg").innerHTML = "Почта введена некорректно"
                             } else {
                                 this.setState({permission: 2, error: 0});
                             }

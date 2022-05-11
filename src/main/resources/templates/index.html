@@ -4,22 +4,60 @@
     <meta charset="UTF-8">
     <title>Личный кабинет</title>
 
-    <script crossorigin src="https://unpkg.com/react/umd/react.development.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom/umd/react-dom.development.js"></script>
+    <script crossorigin src="/js/react.development.js"></script>
+    <script crossorigin src="/js/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
 </head>
 
 
 <body>
-<div id="main">
+<div id="main-app">
 </div>
 </body>
 
 <script type="text/babel">
 
-    const root = ReactDOM.createRoot(document.getElementById('main'));
-    root.render(<h1>Hello, world!</h1>);
+    class Main extends React.Component {
+        constructor() {
+            super();
+            this.state = {permission: 0};
+            this.main = {
+                cards: {
+                    value: "load...",
+                }
+            }
+
+        }
+        async componentDidMount() {
+            let response = await fetch('/userCardsInfo', {
+                method: 'POST',
+            })
+            if (response.ok) {
+                let data = (await response.text()).valueOf()
+                this.main.cards.value = data
+                this.setState({permission: 0});
+
+            }
+        }
+
+
+        render() {
+            return (
+                <h1
+                >{this.main.cards.value}</h1>
+            );
+        }
+
+    }
+
+    class App extends React.Component {
+        render() {
+            return <Main/>;
+        }
+    }
+
+    ReactDOM.render(<App/>, document.getElementById("main-app"));
 
 </script>
 
