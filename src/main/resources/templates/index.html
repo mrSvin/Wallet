@@ -19,17 +19,14 @@
 
 <script type="text/babel">
 
-    function addRender(prop) {
-        <h1>prop</h1>
-    }
-
     function recorsionCreateData(data) {
         data = data.replaceAll('"]','","')
         let begin = data.indexOf('"') + 1
         let end = data.indexOf('",') - 2
         let newData = data.substr(begin, end)
-
-        addRender(newData)
+        const para = document.createElement("h1");
+        para.innerText = newData;
+        document.body.appendChild(para);
 
         let dataRecursion = data.substr(end+3, data.length)
         if (dataRecursion.length>10) {
