@@ -19,19 +19,32 @@
 
 <script type="text/babel">
 
+    let dataCards = new Array();
+
+    function renderCard(test) {
+        return test.map((element) => {
+            return (
+                    <h2> {element} </h2>
+            );
+        });
+    }
+
     function recorsionCreateData(data) {
         data = data.replaceAll('"]','","')
         let begin = data.indexOf('"') + 1
         let end = data.indexOf('",') - 2
         let newData = data.substr(begin, end)
-        const para = document.createElement("h1");
-        para.innerText = newData;
-        document.body.appendChild(para);
+
+        dataCards.push(newData)
 
         let dataRecursion = data.substr(end+3, data.length)
         if (dataRecursion.length>10) {
             recorsionCreateData(dataRecursion)
         }
+
+        ReactDOM.render(renderCard(dataCards), document.getElementById("main-app"));
+
+
     }
 
     class Main extends React.Component {
@@ -70,6 +83,7 @@
     }
 
     class App extends React.Component {
+
         render() {
             return <Main/>;
         }
