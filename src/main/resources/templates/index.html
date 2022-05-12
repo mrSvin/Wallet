@@ -19,13 +19,31 @@
 
 <script type="text/babel">
 
+    function addRender(prop) {
+        <h1>prop</h1>
+    }
+
+    function recorsionCreateData(data) {
+        data = data.replaceAll('"]','","')
+        let begin = data.indexOf('"') + 1
+        let end = data.indexOf('",') - 2
+        let newData = data.substr(begin, end)
+
+        addRender(newData)
+
+        let dataRecursion = data.substr(end+3, data.length)
+        if (dataRecursion.length>10) {
+            recorsionCreateData(dataRecursion)
+        }
+    }
+
     class Main extends React.Component {
         constructor() {
             super();
             this.state = {permission: 0};
             this.main = {
                 cards: {
-                    value: "load...",
+                    value: "Информация о картах",
                 }
             }
 
@@ -36,16 +54,14 @@
             })
             if (response.ok) {
                 let data = (await response.text()).valueOf()
-                this.main.cards.value = data
+
+                // Create elements:
+                recorsionCreateData(data)
+
                 this.setState({permission: 0});
 
-                // Create element:
-                const para = document.createElement("h1");
-                para.innerText = "test";
-                document.body.appendChild(para);
             }
         }
-
 
         render() {
             return (
