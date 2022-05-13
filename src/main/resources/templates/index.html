@@ -8,6 +8,17 @@
     <script crossorigin src="/js/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
+    <style>
+        .card {
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin: 15px;
+        }
+
+        #main-app {
+            display: flex;
+        }
+    </style>
 </head>
 
 
@@ -19,14 +30,34 @@
 
 <script type="text/babel">
 
-    let dataCards = new Array();
+    let dataCards = [];
 
     function renderCard(data) {
-        return data.map((element) => {
+        let splitData = splitString(data)
+
+        return splitData.map((element) => {
             return (
-                    <h2> {element} </h2>
+                    <div className="card" key={element[0].toString()}>
+                        <p> {element[0]} </p>
+                        <p> {element[1]} </p>
+                        <p> {element[2]} </p>
+                        <p> {element[3]} </p>
+                        <p> {element[4]} </p>
+                        <p> {element[5]} </p>
+                        <p> {element[6]} </p>
+                        <p> {element[7]} </p>
+                    </div>
             );
         });
+    }
+
+    function splitString(str) {
+
+        for(let i=0; i < str.length; i++)
+        {
+            str[i] = str[i].toString().split(',')
+        }
+        return str
     }
 
     function recorsionCreateData(data) {
