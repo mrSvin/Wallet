@@ -60,6 +60,7 @@
         return str
     }
 
+
     function recorsionCreateData(data) {
         data = data.replaceAll('"]','","')
         let begin = data.indexOf('"') + 1
@@ -80,6 +81,7 @@
 
     // Жалуется на класс main?
     class Main extends React.Component {
+        _isMounted = false;
         constructor() {
             super();
             this.state = {permission: 0};
@@ -91,6 +93,7 @@
 
         }
         async componentDidMount() {
+            this._isMounted = true;
             let response = await fetch('/userCardsInfo', {
                 method: 'POST',
             })
@@ -99,10 +102,15 @@
 
                 // Create elements:
                 recorsionCreateData(data)
-
-                this.setState({permission: 0});
+                if (this._isMounted) {
+                    this.setState({permission: 0});
+                }
 
             }
+        }
+
+        componentWillUnmount() {
+            this._isMounted = false;
         }
 
         render() {
