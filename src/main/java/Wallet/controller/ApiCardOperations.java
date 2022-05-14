@@ -1,6 +1,7 @@
 package Wallet.controller;
 
 import Wallet.api.request.AddCardRequest;
+import Wallet.api.response.CardsInfoResponse;
 import Wallet.service.CardService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,7 +25,7 @@ public class ApiCardOperations {
     }
 
     @PostMapping("/userCardsInfo")
-    private List<String> userCardsInfo() {
+    private List<CardsInfoResponse> userCardsInfo() {
         return cardService.cardsUserInfo();
     }
 

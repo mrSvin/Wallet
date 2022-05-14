@@ -3,6 +3,7 @@ package Wallet.model;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity(name="cards")
 public class Card {
@@ -31,7 +32,7 @@ public class Card {
     private int cash;
 
     @Column(columnDefinition = "DATETIME")
-    private int add_time;
+    private Date add_time;
 
     @Column(columnDefinition = "VARCHAR(25)")
     @NotNull
@@ -85,11 +86,11 @@ public class Card {
         this.cash = cash;
     }
 
-    public int getAdd_time() {
+    public Date getAdd_time() {
         return add_time;
     }
 
-    public void setAdd_time(int add_time) {
+    public void setAdd_time(Date add_time) {
         this.add_time = add_time;
     }
 

@@ -27,7 +27,7 @@ public interface CardRepository extends CrudRepository<Card, Integer> {
     public Integer findCardNumber(String cardNumber);
 
     @Query(value="SELECT * FROM wallet.cards where user_name = ?1", nativeQuery = true)
-    public List<String> findByUserName(String userName);
+    public List<Card> findByUserName(String userName);
 
     @Modifying
     @Transactional

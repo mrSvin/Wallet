@@ -1,5 +1,7 @@
 package Wallet.service;
 
+import Wallet.api.response.CardsInfoResponse;
+import Wallet.model.Card;
 import Wallet.repository.CardRepository;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -49,19 +51,31 @@ public class CardService {
         return "ok";
     }
 
-    public List<String> cardsUserInfo() {
+    public List<CardsInfoResponse>  cardsUserInfo() {
 
         String username = getUserName();
-        List<String> result = new ArrayList<>();
 
         if (username.equals("anonymousUser") == true) {
-            result.add("пользователь не авторизирован");
-            return result;
+            return null;
         } else {
-            result = cardRepository.findByUserName(username);
+            List<CardsInfoResponse> result = new ArrayList<>();
+            List<Card> cards = cardRepository.findByUserName(username);
+            for (int i = 0; i<cards.size(); i++) {
+                CardsInfoResponse cardsInfoResponse = new CardsInfoResponse();
+                cardsInfoResponse.setCash(cards.get(i).getCash());
+                cardsInfoResponse.setAddDate(cards.get(i).getAdd_time());
+                cardsInfoResponse.setDate(cards.get(i).getDate());
+                cardsInfoResponse.setName(cards.get(i).getName());
+                cardsInfoResponse.setNumber(cards.get(i).getNumber());
+                cardsInfoResponse.setType(cards.get(i).getType());
+                result.add(cardsInfoResponse);
+            }
+
+
+            return result;
         }
 
-        return result;
+
     }
 
     private String getUserName() {
