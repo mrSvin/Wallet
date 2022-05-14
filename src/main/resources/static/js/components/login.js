@@ -1,3 +1,10 @@
+const {
+    HashRouter,
+    Switch,
+    Route,
+    Link
+} = ReactRouterDOM
+
 class Login extends React.Component {
     constructor(props) {
         super(props);
@@ -71,8 +78,68 @@ class Login extends React.Component {
             },
 
         };
+    }
 
+    render() {
+        let errormessage =
+            <p
+                id="errorMsg"
+                class="error-msg"> Логин или пароль слишком короткие
+            </p>;
+        return (
+            <div className="box login">
+                <div>
+                    <h2>Авторизация</h2>
+                    <input
+                        type="text"
+                        tabIndex="1"
+                        placeholder="Username"
+                        onChange={this.login.username.handleChange}
+                    />
+                    <input
+                        type="password"
+                        tabIndex="1"
+                        placeholder="Password"
+                        onChange={this.login.password.handleChange}
+                    />
+                    {this.state.error ? errormessage : null}
+                    <input
+                        id="abc"
+                        name="remember"
+                        type="checkbox"
+                        className="display-none"
+                        onClick={this.login.remember.handleChange}
+                    />
+                    <label
+                        htmlFor="abc"
+                        className="label-block checkbox">
+                        Запомнить меня
+                    </label>
+                    <div
+                        id="login-btn"
+                        className="btn btn-login"
+                        onClick={this.login.login.loginHandle}
+                    >
+                        Авторизация
+                    </div>
+                    <Link to="/registration">
+                        <div
+                            id="registration-btn"
+                            className="btn btn-registration"
+                        >
+                            Регистрация
+                        </div>
+                    </Link>
+                </div>
+            </div>
+        );
+    }
+}
 
+class Registration extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {permission: 0};
         this.registration = {
             username: {
                 value: "",
@@ -150,106 +217,61 @@ class Login extends React.Component {
         };
     }
 
-
     render() {
         let errormessage =
             <p
                 id="errorMsg"
                 class="error-msg"> Логин или пароль слишком короткие
             </p>;
-        let loginForm = (
-            <div>
-                <h2>Авторизация</h2>
-                <input
-                    type="text"
-                    tabindex="1"
-                    placeholder="Username"
-                    onChange={this.login.username.handleChange}
-                />
-                <input
-                    type="password"
-                    tabindex="1"
-                    placeholder="Password"
-                    onChange={this.login.password.handleChange}
-                />
-                {this.state.error ? errormessage : null}
-                <input
-                    id="abc"
-                    name="remember"
-                    type="checkbox"
-                    class="display-none"
-                    onClick={this.login.remember.handleChange}
-                />
-                <label
-                    for="abc"
-                    class="label-block checkbox">
-                    Запомнить меня
-                </label>
-                <div
-                    id="login-btn"
-                    class="btn btn-login" onClick={this.login.login.loginHandle}>
-                    Авторизация
-                </div>
-                <div
-                    id="registration-btn"
-                    className="btn btn-registration" onClick={this.login.registration.registrationHandle}>
-                    Регистрация
-                </div>
-            </div>
-        );
-
-        let registrationForm = (
+        return (
             this.state.permission != 2 ?
-                <div>
-                    <h2>Регистрация нового пользователя</h2>
-                    <input
-                        type="text"
-                        placeholder="Username"
-                        onChange={this.registration.username.handleChange}
-                    />
-                    <input
-                        type="password"
-                        placeholder="Password"
-                        onChange={this.registration.password.handleChange}
-                    />
-                    <input
-                        type="text"
-                        placeholder="Email"
-                        onChange={this.registration.email.handleChange}
-                    />
+                <div className="box registration">
+                    <div>
+                        <h2>Регистрация нового пользователя</h2>
+                        <input
+                            type="text"
+                            placeholder="Username"
+                            onChange={this.registration.username.handleChange}
+                        />
+                        <input
+                            type="password"
+                            placeholder="Password"
+                            onChange={this.registration.password.handleChange}
+                        />
+                        <input
+                            type="text"
+                            placeholder="Email"
+                            onChange={this.registration.email.handleChange}
+                        />
 
-                    {this.state.error ? errormessage : null}
-                    <div class="btn btn-login" onClick={this.registration.addUser.handleChange}>
-                        Зарегистрироваться
+                        {this.state.error ? errormessage : null}
+                        <div className="btn btn-login" onClick={this.registration.addUser.handleChange}>
+                            Зарегистрироваться
+                        </div>
                     </div>
                 </div>
                 :
-                <div>
-                    <h2>Регистрация успешно завершена!</h2>
-                    <div className="btn btn-login" onClick={this.registration.return.handleChange}>
-                        Вернуться к авторизации
+                <div className="box registration">
+                    <div>
+                        <h2>Регистрация успешно завершена!</h2>
+                        <Link to="/">
+                            <div
+                                className="btn btn-registration"
+                            >
+                                Вернуться к авторизации
+                            </div>
+                        </Link>
                     </div>
                 </div>
         );
-
-        return (
-            <div className={
-                `box ${
-                    this.state.permission == 0 ? "login" : "registration"
-                }`
-            }>
-                {
-                    this.state.permission == 0 ? loginForm : registrationForm
-                }
-            </div>
-        );
     }
 }
 
-class App extends React.Component {
-    render() {
-        return <Login/>;
-    }
-}
+const App = () => (
+    <HashRouter>
+        <Route exact path="/" component={Login}/>
+        <Route path="/registration" component={Registration}/>
+    </HashRouter>
+);
 
-ReactDOM.render(<App/>, document.getElementById("login-app"));
+ReactDOM.render(<App/>, document.getElementById('login-app'));
