@@ -160,10 +160,8 @@ class Registration extends React.Component {
                 }
             },
 
-            return: {
-                handleChange: () => {
-                    this.setState({permission: 0, error: 0});
-                }
+            captcha: {
+                value: "",
             },
 
             addUser: {
@@ -217,6 +215,18 @@ class Registration extends React.Component {
         };
     }
 
+    async componentDidMount() {
+
+        fetch('/auth/captcha', {
+            method: 'GET'
+        }).then((response) => {
+            return response.json();
+        }).then((data) => {
+            this.registration.captcha.value = data.image
+            this.setState({permission: 0, error: 0});
+        });
+    }
+
     render() {
         let errormessage =
             <p
@@ -241,6 +251,15 @@ class Registration extends React.Component {
                         <input
                             type="text"
                             placeholder="Email"
+                            onChange={this.registration.email.handleChange}
+                        />
+                        <img
+                            className="captcha"
+                            src={this.registration.captcha.value}
+                        />
+                        <input
+                            type="text"
+                            placeholder="Введите код c картинки"
                             onChange={this.registration.email.handleChange}
                         />
 
