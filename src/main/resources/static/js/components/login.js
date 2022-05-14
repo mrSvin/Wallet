@@ -164,13 +164,26 @@ class Registration extends React.Component {
                 value: "",
             },
 
+            captchaSecret: {
+                value: "",
+            },
+
+            captchaInput: {
+                value: "",
+                handleChange: (event) => {
+                    this.registration.captchaInput.value = event.target.value;
+                }
+            },
+
             addUser: {
                 handleChange: async () => {
                     if (this.registration.username.value.length >= 3 && this.registration.password.value.length >= 3 && this.registration.email.value.length >= 3) {
                         var raw = JSON.stringify({
                             email: this.registration.email.value,
                             password: this.registration.password.value,
-                            username: this.registration.username.value
+                            username: this.registration.username.value,
+                            captcha: this.registration.captchaInput.value,
+                            secret: this.registration.captchaSecret.value
                         });
 
                         let response = await fetch("/addUser", {
@@ -191,7 +204,7 @@ class Registration extends React.Component {
                                 this.setState({permission: 1, error: 1});
                                 document.getElementById("errorMsg").innerHTML = "Почта введена некорректно"
                             } else {
-                                this.setState({permission: 2, error: 0});
+                                // this.setState({permission: 2, error: 0});
                             }
 
                         }
@@ -223,6 +236,7 @@ class Registration extends React.Component {
             return response.json();
         }).then((data) => {
             this.registration.captcha.value = data.image
+            this.registration.captchaSecret.value = data.secret
             this.setState({permission: 0, error: 0});
         });
     }
@@ -260,7 +274,7 @@ class Registration extends React.Component {
                         <input
                             type="text"
                             placeholder="Введите код c картинки"
-                            onChange={this.registration.email.handleChange}
+                            onChange={this.registration.captchaInput.handleChange}
                         />
 
                         {this.state.error ? errormessage : null}

@@ -1,25 +1,27 @@
 package Wallet.service;
 
+import Wallet.repository.CaptchaRepository;
 import Wallet.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Service
 public class UserService {
 
     private final UserRepository userRepository;
+    private final CaptchaRepository captchaRepository;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, CaptchaRepository captchaRepository) {
         this.userRepository = userRepository;
+        this.captchaRepository = captchaRepository;
     }
 
     public String addNewUser(String email, String password, String username) {
 
         int countUser = userRepository.findUser(username);
         int countEmail = userRepository.findEmail(email);
+//        int captchaRepo = captchaRepository.findByCaptcha(captcha, captchaSecret).size();
 
         if (countUser > 0) {
             return "Имя занято";
