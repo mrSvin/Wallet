@@ -1,0 +1,57 @@
+.card {
+    padding: 20px;
+    margin: 15px;
+    border-radius: 10px;
+    width: 360px;
+    height: 200px;
+    background: #292C3A;;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1em;
+    flex-flow: row wrap;
+    cursor: pointer;
+    z-index: 1;
+    position: relative;
+    transition: all ease 0.45s;
+}
+
+
+.card-number {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Muli", sans-serif;
+    font-size: 30px;
+    color: #FFF;
+    width: 100%;
+    cursor: pointer;
+}
+
+.card_holder {
+    width: 50%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Muli", sans-serif;
+    cursor: pointer;
+}
+
+.ng-binding {
+    font-size: 30px;
+    color: #FFF;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Muli", sans-serif;
+    cursor: pointer;
+}
+
+.card_icon {
+    width: 20%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Muli", sans-serif;
+    cursor: pointer;
+}

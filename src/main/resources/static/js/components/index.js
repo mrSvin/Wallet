@@ -14,8 +14,6 @@ class Main extends React.Component {
             for (var i = 0; i < data.length; i++) {
                 this.setState({cards: data})
             }
-            console.log(this.state.cards);
-
         });
     }
 
@@ -28,11 +26,16 @@ class Main extends React.Component {
                 {this.state.cards.map(cards => {
                     return (
                     <div className="card" key={`card-${cards.number}`}>
-                        <p >{cards.number}</p>
+                        <div className="card-number">{cards.number}</div>
+                        <div className="card_holder">
+                        <p className="ng-binding">{cards.date}</p>
+                        <p className="ng-binding">{cards.name}</p>
+                        </div>
+                        <div className="card_icon">
+                            <img src="/img/visa.png"/>
+                        </div>
                         <p >{cards.cash}</p>
-                        <p >{cards.date}</p>
-                        <p >{cards.name}</p>
-                        <p >{cards.type}</p>
+
                     </div>
                     )
                 })}
