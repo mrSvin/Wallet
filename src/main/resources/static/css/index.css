@@ -1,3 +1,13 @@
+#main-app {
+    background: url("https://www.xmple.com/wallpaper/purple-gradient-blue-linear-1920x1080-c2-87cefa-da70d6-a-195-f-14.svg");
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    overflow: auto;
+}
+
 .card {
     padding: 20px;
     margin: 15px;
@@ -46,6 +56,7 @@
     font-family: "Muli", sans-serif;
     cursor: pointer;
 }
+
 .cash-binding {
     font-size: 30px;
     color: #c22d2d;
