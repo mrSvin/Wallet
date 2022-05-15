@@ -9,6 +9,8 @@ public class AddUserRequest {
     private String email;
     private String password;
     private String username;
+    private String secret;
+    private String captcha;
 
     public String getEmail() {
         return email;
@@ -32,5 +34,21 @@ public class AddUserRequest {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getSecret() {
+        return secret;
+    }
+
+    public void setSecret(String sectret) {
+        this.secret = sectret;
+    }
+
+    public String getCaptcha() {
+        return captcha;
+    }
+
+    public void setCaptcha(String captcha) {
+        this.captcha = captcha;
     }
 }

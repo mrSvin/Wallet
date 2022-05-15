@@ -26,7 +26,7 @@ public class ApiUser {
     private String addUser(@RequestBody AddUserRequest addUserRequest) {
 
         return userService.addNewUser(addUserRequest.getEmail(), addUserRequest.getPassword(),
-                addUserRequest.getUsername());
+                addUserRequest.getUsername(), addUserRequest.getSecret(), addUserRequest.getCaptcha());
     }
 
     @GetMapping("/auth/captcha")

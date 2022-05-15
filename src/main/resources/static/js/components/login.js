@@ -203,8 +203,11 @@ class Registration extends React.Component {
                             } else if (textResponse == "Почта введена некорректно") {
                                 this.setState({permission: 1, error: 1});
                                 document.getElementById("errorMsg").innerHTML = "Почта введена некорректно"
+                            } else if (textResponse == "Каптча введена не верно") {
+                                this.setState({permission: 1, error: 1});
+                                document.getElementById("errorMsg").innerHTML = "Каптча введена не верно"
                             } else {
-                                // this.setState({permission: 2, error: 0});
+                                this.setState({permission: 2, error: 0});
                             }
 
                         }

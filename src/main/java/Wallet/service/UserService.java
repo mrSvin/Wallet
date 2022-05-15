@@ -17,11 +17,11 @@ public class UserService {
         this.captchaRepository = captchaRepository;
     }
 
-    public String addNewUser(String email, String password, String username) {
+    public String addNewUser(String email, String password, String username, String captchaSecret, String captcha) {
 
         int countUser = userRepository.findUser(username);
         int countEmail = userRepository.findEmail(email);
-//        int captchaRepo = captchaRepository.findByCaptcha(captcha, captchaSecret).size();
+        int captchaRepo = captchaRepository.findByCaptcha(captcha, captchaSecret).size();
 
         if (countUser > 0) {
             return "Имя занято";
@@ -31,6 +31,9 @@ public class UserService {
         }
         if (email.indexOf("@")<2 || email.indexOf(".")<4) {
             return "Почта введена некорректно";
+        }
+        if (captchaRepo == 0) {
+            return "Каптча введена не верно";
         }
 
         Date date = new Date();
