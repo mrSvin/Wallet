@@ -46,6 +46,15 @@
     font-family: "Muli", sans-serif;
     cursor: pointer;
 }
+.cash-binding {
+    font-size: 30px;
+    color: #c22d2d;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Muli", sans-serif;
+    cursor: pointer;
+}
 
 .card_icon {
     width: 20%;

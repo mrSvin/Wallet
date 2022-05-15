@@ -25,18 +25,19 @@ class Main extends React.Component {
 
                 {this.state.cards.map(cards => {
                     return (
-                    <div className="card" key={`card-${cards.number}`}>
-                        <div className="card-number">{cards.number}</div>
-                        <div className="card_holder">
-                        <p className="ng-binding">{cards.date}</p>
-                        <p className="ng-binding">{cards.name}</p>
-                        </div>
-                        <div className="card_icon">
-                            <img src="/img/visa.png"/>
-                        </div>
-                        <p >{cards.cash}</p>
+                        <div className="card" key={`card-${cards.number}`}>
+                            <div className="card-number">{cards.number}</div>
+                            <div className="card_holder">
+                                <p className="ng-binding">{cards.date}</p>
+                                <p className="ng-binding">{cards.name}</p>
+                                <p className="cash-binding">{cards.cash} rub</p>
+                            </div>
+                            <div className="card_icon">
+                                <img src="/img/visa.png"/>
+                            </div>
 
-                    </div>
+
+                        </div>
                     )
                 })}
 
