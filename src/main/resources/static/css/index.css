@@ -26,6 +26,10 @@
     transition: all ease 0.45s;
 }
 
+.card:hover {
+    background: #8cd54b;
+}
+
 
 .card-number {
     margin: 0;
@@ -102,6 +106,10 @@
     font-family: "Muli", sans-serif;
 }
 
+.add_a_card:hover {
+    color: #8cd54b;
+}
+
 aside {
     background: #292C3A;
     margin: 0;
@@ -139,7 +147,6 @@ main {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    color: #FFF;
     cursor: pointer;
 }
 

@@ -17,7 +17,6 @@ class Main extends React.Component {
         });
     }
 
-
     render() {
         return (
             <div className="app_inner">
@@ -27,7 +26,10 @@ class Main extends React.Component {
 
                         {this.state.cards.map(cards => {
                             return (
-                                <div className="card" key={`card-${cards.number}`}>
+                                <div
+                                    className="card"
+                                    key={`card-${cards.number}`}
+                                >
                                     <div className="card-number">{cards.number}</div>
                                     <div className="card_holder">
                                         <p className="ng-binding">{cards.date}</p>
@@ -37,6 +39,7 @@ class Main extends React.Component {
                                     <div className="card_icon">
                                         <img src="/img/visa.png"/>
                                     </div>
+
                                 </div>
                             )
                         })}
