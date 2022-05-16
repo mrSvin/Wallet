@@ -1,7 +1,12 @@
 class Main extends React.Component {
     constructor() {
         super();
-        this.state = {cards: []};
+        this.state = {
+            cards: [],
+            infoMain: "Информация о операциях"
+        };
+
+
 
     }
 
@@ -17,6 +22,14 @@ class Main extends React.Component {
         });
     }
 
+    cardClick = (e) => {
+        this.setState({infoMain : "Информация о операциях"})
+    }
+
+    addCardClick = (e) => {
+        this.setState({infoMain : "Добавление карты"})
+    }
+
     render() {
         return (
             <div className="app_inner">
@@ -29,6 +42,7 @@ class Main extends React.Component {
                                 <div
                                     className="card"
                                     key={`card-${cards.number}`}
+                                    onClick={this.cardClick}
                                 >
                                     <div className="card-number">{cards.number}</div>
                                     <div className="card_holder">
@@ -43,7 +57,10 @@ class Main extends React.Component {
                                 </div>
                             )
                         })}
-                        <div className="add_a_card">
+                        <div
+                            className="add_a_card"
+                            onClick={this.addCardClick}
+                        >
                             <p className="info_add_a_card">Добавить карту</p>
                             <i className="fa_fa-plus">
                                 +
@@ -53,7 +70,7 @@ class Main extends React.Component {
                 </aside>
                 <main>
                     <div>
-                        <h1 className="info">Информация о операциях</h1>
+                        <h1 className="info">{this.state.infoMain}</h1>
                     </div>
                 </main>
             </div>
