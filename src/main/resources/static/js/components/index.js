@@ -20,27 +20,39 @@ class Main extends React.Component {
 
     render() {
         return (
-            <div>
-                <h1>Информация о картах</h1>
+            <div className="app_inner">
+                <aside>
+                    <div className="wallet">
+                        <h1 className="info">Информация о картах</h1>
 
-                {this.state.cards.map(cards => {
-                    return (
-                        <div className="card" key={`card-${cards.number}`}>
-                            <div className="card-number">{cards.number}</div>
-                            <div className="card_holder">
-                                <p className="ng-binding">{cards.date}</p>
-                                <p className="ng-binding">{cards.name}</p>
-                                <p className="cash-binding">{cards.cash} rub</p>
-                            </div>
-                            <div className="card_icon">
-                                <img src="/img/visa.png"/>
-                            </div>
-
-
+                        {this.state.cards.map(cards => {
+                            return (
+                                <div className="card" key={`card-${cards.number}`}>
+                                    <div className="card-number">{cards.number}</div>
+                                    <div className="card_holder">
+                                        <p className="ng-binding">{cards.date}</p>
+                                        <p className="ng-binding">{cards.name}</p>
+                                        <p className="cash-binding">{cards.cash} rub</p>
+                                    </div>
+                                    <div className="card_icon">
+                                        <img src="/img/visa.png"/>
+                                    </div>
+                                </div>
+                            )
+                        })}
+                        <div className="add_a_card">
+                            <p className="info_add_a_card">Добавить карту</p>
+                            <i className="fa_fa-plus">
+                                +
+                            </i>
                         </div>
-                    )
-                })}
-
+                    </div>
+                </aside>
+                <main>
+                    <div>
+                        <h1 className="info">Информация о операциях</h1>
+                    </div>
+                </main>
             </div>
         )
 
