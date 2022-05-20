@@ -6,8 +6,6 @@ class Main extends React.Component {
             infoMain: "Информация о операциях"
         };
 
-
-
     }
 
     async componentDidMount() {
@@ -79,12 +77,3 @@ class Main extends React.Component {
     }
 
 }
-
-class App extends React.Component {
-
-    render() {
-        return <Main/>;
-    }
-}
-
-ReactDOM.render(<App/>, document.getElementById("main-app"));
