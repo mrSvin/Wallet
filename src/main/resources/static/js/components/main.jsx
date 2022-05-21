@@ -1,9 +1,97 @@
+class CardAdd extends React.Component {
+
+    constructor() {
+        super();
+        this.state = {
+
+            numberCard: {
+                value: "",
+                handleChange: (event) => {
+                    this.state.numberCard.value = event.target.value;
+                }
+            },
+
+            nameCard: {
+                value: "",
+                handleChange: (event) => {
+                    this.state.nameCard.value = event.target.value;
+                }
+            },
+
+            dateCard: {
+                value: "",
+                handleChange: (event) => {
+                    this.state.dateCard.value = event.target.value;
+                }
+            },
+
+            buttonAddCard: {
+                handleChange: async () => {
+                    console.log(this.state.numberCard.value)
+                    console.log(this.state.nameCard.value)
+                    console.log(this.state.dateCard.value)
+                    var bodyJson = JSON.stringify({
+                        number: this.state.numberCard.value,
+                        date: this.state.dateCard.value,
+                        name: this.state.nameCard.value,
+                        type: "visa",
+                    });
+
+                    let response = await fetch("/addCard", {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: bodyJson
+                    })
+
+                    if (response.ok) {
+                        window.location.reload()
+                    }
+
+                }
+            }
+        }
+    }
+
+    render() {
+        return (
+            <div className="addContent">
+                <input
+                    className="inputAddCard"
+                    placeholder="ведите номер карты"
+                    onChange={this.state.numberCard.handleChange}
+                >
+                </input>
+                <input
+                    className="inputAddCard"
+                    placeholder="Введите имя"
+                    onChange={this.state.nameCard.handleChange}
+                >
+                </input>
+                <input
+                    className="inputAddCard"
+                    placeholder="MM/YY"
+                    onChange={this.state.dateCard.handleChange}
+                >
+                </input>
+                <input
+                    className="buttonAddCard"
+                    type="submit"
+                    value="Добавить карту"
+                    onClick={this.state.buttonAddCard.handleChange}
+                >
+                </input>
+            </div>
+        )
+    }
+}
+
 class Main extends React.Component {
     constructor() {
         super();
         this.state = {
             cards: [],
             infoMain: "Информация о операциях"
+
         };
 
     }
@@ -21,11 +109,11 @@ class Main extends React.Component {
     }
 
     cardClick = (e) => {
-        this.setState({infoMain : "Информация о операциях"})
+        this.setState({infoMain: "Информация о операциях"})
     }
 
     addCardClick = (e) => {
-        this.setState({infoMain : "Добавление карты"})
+        this.setState({infoMain: "Добавление карты"})
     }
 
     render() {
@@ -70,6 +158,9 @@ class Main extends React.Component {
                     <div>
                         <h1 className="info">{this.state.infoMain}</h1>
                     </div>
+                    {this.state.infoMain == "Информация о операциях" ? null :
+                        <CardAdd/>}
+
                 </main>
             </div>
         )

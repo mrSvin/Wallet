@@ -131,7 +131,6 @@ main {
 .app_inner {
     background: #FFF;
     width: 100%;
-    height: 100%;
     display: flex;
     box-shadow: 1px 5px 15px #CCC;
     margin: 0;
@@ -155,4 +154,36 @@ main {
     padding: 0;
     font-size: 30px;
     box-sizing: border-box;
+}
+
+.inputAddCard {
+    background: transparent;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.015);
+    padding: 1em 0;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    width: 85%;
+    font-size: 18px;
+    outline: none;
+    color: #FFF;
+    margin: 50px;
+}
+
+.buttonAddCard {
+    background: #1a1c25;
+    color: #FFF;
+    border: none;
+    padding: 1em;
+    width: 85%;
+    font-size: 18px;
+    outline: none;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: all ease 0.15s;
+    margin: 50px;
+}
+
+.buttonAddCard:hover {
+    background: #c22d2d;
 }

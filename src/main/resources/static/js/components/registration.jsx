@@ -39,7 +39,8 @@ class Registration extends React.Component {
 
             addUser: {
                 handleChange: async () => {
-                    if (this.registration.username.value.length >= 3 && this.registration.password.value.length >= 3 && this.registration.email.value.length >= 3) {
+                    if (this.registration.username.value.length >= 3 && this.registration.password.value.length >= 3
+                        && this.registration.email.value.length >= 3) {
                         var raw = JSON.stringify({
                             email: this.registration.email.value,
                             password: this.registration.password.value,
@@ -62,7 +63,8 @@ class Registration extends React.Component {
                             } else if (textResponse == "Почта занята") {
                                 this.setState({permission: 1, error: 1});
                                 document.getElementById("errorMsg").innerHTML = "Почта занята"
-                            } else if (textResponse == "Почта введена некорректно") {
+                            }
+                    else if (textResponse == "Почта введена некорректно") {
                                 this.setState({permission: 1, error: 1});
                                 document.getElementById("errorMsg").innerHTML = "Почта введена некорректно"
                             } else if (textResponse == "Каптча введена не верно") {
