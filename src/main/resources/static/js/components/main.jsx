@@ -1,12 +1,26 @@
+class CardControl extends React.Component {
+
+    render() {
+        return (
+            <div>
+                <h2 className="info">{this.props.cardNumber}</h2>
+            </div>
+        )
+    }
+
+}
+
 class Main extends React.Component {
     constructor() {
         super();
         this.state = {
             cards: [],
-            infoMain: "Информация о операциях"
+            infoMain: "Информация о карте",
+            choiceCard: {
+                value: "",
+            },
 
         };
-
     }
 
     async componentDidMount() {
@@ -21,14 +35,21 @@ class Main extends React.Component {
         });
     }
 
-    cardClick = () => {
-        this.setState({infoMain: "Информация о операциях"})
+    cardClick = (parameter) => () => {
+        document.getElementById("main-app").scroll(0,0)
+
+        this.setState({infoMain: "Информация о карте"})
+        this.state.choiceCard.value= parameter
+        // console.log(parameter)
     }
 
+
     addCardClick = () => {
-        this.setState({infoMain: "Добавление карты"})
         document.getElementById("main-app").scroll(0,0)
+
+        this.setState({infoMain: "Добавление карты"})
     }
+
 
     render() {
         return (
@@ -42,7 +63,7 @@ class Main extends React.Component {
                                 <div
                                     className="card"
                                     key={`card-${cards.number}`}
-                                    onClick={this.cardClick}
+                                    onClick={this.cardClick(cards.number)}
                                 >
                                     <div className="card-number">{cards.number}</div>
                                     <div className="card_holder">
@@ -72,7 +93,7 @@ class Main extends React.Component {
                     <div>
                         <h1 className="info">{this.state.infoMain}</h1>
                     </div>
-                    {this.state.infoMain == "Информация о карте" ? null :
+                    {this.state.infoMain == "Информация о карте" ? <CardControl cardNumber={this.state.choiceCard.value}/> :
                         <CardAdd/>}
 
                 </main>
