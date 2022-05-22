@@ -37,7 +37,7 @@ public class CardService {
         if (dateCard.length() != 5) {
             return "дата действия карты введена не корректно";
         }
-        if (type.equals("visa") == false && type.equals("mastecard") == false) {
+        if (type.equals("visa") == false && type.equals("mastercard") == false && type.equals("mir") == false) {
             return "тип карты указан не корректно";
         }
         if (name.length() < 4 && name.length() > 25) {

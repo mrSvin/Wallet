@@ -5,7 +5,7 @@
     left: 0;
     bottom: 0;
     right: 0;
-    overflow: auto;
+    overflow: scroll;
 }
 
 .card {
@@ -132,7 +132,6 @@ main {
     background: #FFF;
     width: 100%;
     display: flex;
-    box-shadow: 1px 5px 15px #CCC;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -186,4 +185,22 @@ main {
 
 .buttonAddCard:hover {
     background: #c22d2d;
+}
+
+.choiceTypeContent {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.choiceType {
+    margin: 0 1em;
+    width: 80px;
+    height: auto;
+    cursor: pointer;
+    padding: 0.6em;
+    border-radius: 7px;
+    transition: all ease 0.45s;
+    background: none;
 }
