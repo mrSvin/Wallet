@@ -204,3 +204,9 @@ main {
     transition: all ease 0.45s;
     background: none;
 }
+
+.error-msg {
+    color: #ff6d6d;
+    text-align: center;
+    font-size: 30px;
+}

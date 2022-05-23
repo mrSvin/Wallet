@@ -40,7 +40,7 @@ public class CardService {
         if (type.equals("visa") == false && type.equals("mastercard") == false && type.equals("mir") == false) {
             return "тип карты указан не корректно";
         }
-        if (name.length() < 4 && name.length() > 25) {
+        if (name.length() < 4 || name.length() > 25) {
             return "имя владельца карты введено не корректно";
         }
 

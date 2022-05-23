@@ -45,7 +45,21 @@ class CardAdd extends React.Component {
                     })
 
                     if (response.ok) {
-                        window.location.reload()
+                        let textResponse = (await response.text()).valueOf()
+                        if (textResponse == "номер карты введен не корректно") {
+                            this.setState({ error: 1});
+                            document.getElementById("errorMsg").innerHTML = "Номер карты введен не корректно."
+                        } else if (textResponse == 'дата действия карты введена не корректно') {
+                            this.setState({ error: 1});
+                            document.getElementById("errorMsg").innerHTML = "Дата действия карты введена не корректно."
+                        } else if (textResponse == 'Данный номер карты уже добавлен') {
+                            this.setState({ error: 1});
+                            document.getElementById("errorMsg").innerHTML = "Данный номер карты уже добавлен."
+                        } else if (textResponse == 'имя владельца карты введено не корректно') {
+                            this.setState({ error: 1});
+                            document.getElementById("errorMsg").innerHTML = "Имя владельца карты введено не корректно."
+                        }
+                        //window.location.reload()
                     }
 
                 }
@@ -74,11 +88,17 @@ class CardAdd extends React.Component {
 
         }
 
+        let errormessage =
+            <p
+                id="errorMsg"
+                className="error-msg">
+            </p>;
+
         return (
             <div className="addContent">
                 <input
                     className="inputAddCard"
-                    placeholder="ведите номер карты"
+                    maxLength="19"
                     onChange={this.state.numberCard.handleChange}
                 >
                 </input>
@@ -118,6 +138,7 @@ class CardAdd extends React.Component {
                     >
                     </img>
                 </div>
+                {this.state.error ? errormessage : null}
                 <input
                     className="buttonAddCard"
                     type="submit"

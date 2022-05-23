@@ -112,7 +112,7 @@ class Registration extends React.Component {
         let errormessage =
             <p
                 id="errorMsg"
-                class="error-msg"> Логин или пароль слишком короткие
+                className="error-msg"> Логин или пароль слишком короткие
             </p>;
         return (
             this.state.permission != 2 ?
