@@ -7,6 +7,7 @@ class CardAdd extends React.Component {
             numberCard: {
                 value: "",
                 handleChange: (event) => {
+                    event.target.value = event.target.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1')
                     this.state.numberCard.value = event.target.value;
                 }
             },
@@ -99,6 +100,7 @@ class CardAdd extends React.Component {
                 <input
                     className="inputAddCard"
                     maxLength="19"
+                    placeholder="Введите номер карты"
                     onChange={this.state.numberCard.handleChange}
                 >
                 </input>
