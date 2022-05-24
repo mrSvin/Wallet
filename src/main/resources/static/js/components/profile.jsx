@@ -9,6 +9,12 @@ class Profile extends React.Component {
 
             dropdown: "none",
 
+            userProfile: {
+                name: "",
+                email: "",
+                photo: "",
+            },
+
             buttonAvatar: {
                 handleChange: async () => {
                     this.state.dropdown == "none" ? this.setState({dropdown: "block"}) : this.setState({dropdown: "none"})
@@ -20,6 +26,18 @@ class Profile extends React.Component {
 
     componentDidMount() {
         document.addEventListener("mousedown", this.handleClickOutside);
+
+        fetch('/userInfo', {
+            method: 'GET'
+        }).then((response) => {
+            return response.json();
+        }).then((data) => {
+            this.state.userProfile.name = data.name
+            this.state.userProfile.email = data.email
+            this.state.userProfile.photo = data.photo
+            this.setState({dropdown: "none"});
+        });
+
     }
 
     componentWillUnmount() {
@@ -78,13 +96,13 @@ class Profile extends React.Component {
 
                     <p
                         className="userName"
-                    >admin
+                    >{this.state.userProfile.name}
                     </p>
 
                     <p
                         className="userEmail"
                     >
-                        alva@sespel.com
+                        {this.state.userProfile.email}
                     </p>
 
                     <button

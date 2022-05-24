@@ -1,10 +1,15 @@
 package Wallet.service;
 
+import Wallet.api.response.UserInfoResponse;
+import Wallet.model.User;
 import Wallet.repository.CaptchaRepository;
 import Wallet.repository.UserRepository;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class UserService {
@@ -39,6 +44,29 @@ public class UserService {
         Date date = new Date();
         userRepository.addUser("1", email, 1, password, "0", date, "ROLE_USER", username);
         return "Пользователь зарегистрирован";
+    }
+
+    public UserInfoResponse userInfo() {
+        UserInfoResponse userInfoResponse = new UserInfoResponse();
+
+        String username = getUserName();
+
+        if (username.equals("anonymousUser") == true) {
+            userInfoResponse.setError("пользователь не авторизирован");
+            return  userInfoResponse;
+        }
+
+        List<User> userInfo = userRepository.findUserInfo(username);
+        userInfoResponse.setEmail(userInfo.get(0).getEmail());
+        userInfoResponse.setName(userInfo.get(0).getName());
+        userInfoResponse.setPhoto(userInfo.get(0).getPhoto());
+
+        return  userInfoResponse;
+    }
+
+    private String getUserName() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication.getName();
     }
 
 }

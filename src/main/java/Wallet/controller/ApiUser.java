@@ -2,6 +2,7 @@ package Wallet.controller;
 
 import Wallet.api.request.AddUserRequest;
 import Wallet.api.response.CaptchaResponse;
+import Wallet.api.response.UserInfoResponse;
 import Wallet.service.CaptchaService;
 import Wallet.service.UserService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,8 +31,14 @@ public class ApiUser {
     }
 
     @GetMapping("/auth/captcha")
-    private CaptchaResponse Captcha() throws IOException {
+    private CaptchaResponse captcha() throws IOException {
         return captchaService.captchaGenerate();
     }
+
+    @GetMapping("/userInfo")
+    private UserInfoResponse userInfo() {
+        return userService.userInfo();
+    }
+
 
 }

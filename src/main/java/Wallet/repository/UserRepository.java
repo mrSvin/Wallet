@@ -29,4 +29,8 @@ public interface UserRepository extends CrudRepository<User, Integer> {
     @Query(value="SELECT COUNT(*) count " +
             "FROM wallet.users where email = ?1", nativeQuery = true)
     public Integer findEmail(String email);
+
+    @Query(value="SELECT * FROM wallet.users where username=?1", nativeQuery = true)
+    public List<User> findUserInfo(String username);
+
 }
