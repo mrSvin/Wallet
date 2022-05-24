@@ -7,7 +7,11 @@ class CardAdd extends React.Component {
             numberCard: {
                 value: "",
                 handleChange: (event) => {
-                    event.target.value = event.target.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1')
+                    //only numbers
+                    event.target.value = event.target.value.replace(/[^0-9 ]/g, '').replace(/(\..*?)\..*/g, '$1')
+                    if (((event.target.value.length + 1) % 5) === 0 && event.target.value.length<=18) {
+                        event.target.value = event.target.value + " ";
+                    }
                     this.state.numberCard.value = event.target.value;
                 }
             },
@@ -22,6 +26,10 @@ class CardAdd extends React.Component {
             dateCard: {
                 value: "",
                 handleChange: (event) => {
+                    event.target.value = event.target.value.replace(/[^0-9/]/g, '').replace(/(\..*?)\..*/g, '$1')
+                    if (event.target.value.length==2 ) {
+                        event.target.value = event.target.value + "/";
+                    }
                     this.state.dateCard.value = event.target.value;
                 }
             },
@@ -59,8 +67,10 @@ class CardAdd extends React.Component {
                         } else if (textResponse == 'имя владельца карты введено не корректно') {
                             this.setState({ error: 1});
                             document.getElementById("errorMsg").innerHTML = "Имя владельца карты введено не корректно."
+                        } else {
+                            window.location.reload()
                         }
-                        //window.location.reload()
+
                     }
 
                 }
@@ -112,6 +122,7 @@ class CardAdd extends React.Component {
                 </input>
                 <input
                     className="inputAddCard"
+                    maxLength="5"
                     placeholder="MM/YY"
                     onChange={this.state.dateCard.handleChange}
                 >

@@ -31,7 +31,8 @@ public class CardService {
         if (username.equals("anonymousUser") == true) {
             return "пользователь не авторизирован";
         }
-        if (number.length() != 16) {
+        String numberTest=number.replaceAll(" ","");
+        if (numberTest.length() != 16) {
             return "номер карты введен не корректно";
         }
         if (dateCard.length() != 5) {
