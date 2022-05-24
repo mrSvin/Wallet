@@ -63,7 +63,7 @@ class Profile extends React.Component {
                 <input
                     className="avatar"
                     type="image"
-                    src="http://192.168.3.152:8080/upload/userProfile/admin-userProfile.jpg"
+                    src="/upload/userProfile/vk.png"
                     alt="Avatar"
                     onClick={this.state.buttonAvatar.handleChange}
                 >
@@ -89,7 +89,8 @@ class Profile extends React.Component {
                         />
                         <img
                             className="outputImage"
-                            src="https://cdn.pixabay.com/photo/2017/08/06/21/01/louvre-2596278_960_720.jpg" id="output"
+                            src="/upload/userProfile/vk.png"
+                            id="output"
                             width="200"
                         />
                     </div>
