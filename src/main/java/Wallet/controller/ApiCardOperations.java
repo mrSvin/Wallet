@@ -5,6 +5,7 @@ import Wallet.api.response.CardsInfoResponse;
 import Wallet.service.CardService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -27,6 +28,11 @@ public class ApiCardOperations {
     @PostMapping("/userCardsInfo")
     private List<CardsInfoResponse> userCardsInfo() {
         return cardService.cardsUserInfo();
+    }
+
+    @PostMapping("/deleteCard")
+    private String deleteCard(@RequestParam(value = "cardNumber") String cardNumber) {
+        return null;
     }
 
 }
