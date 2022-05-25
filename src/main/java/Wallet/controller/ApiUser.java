@@ -4,23 +4,27 @@ import Wallet.api.request.AddUserRequest;
 import Wallet.api.response.CaptchaResponse;
 import Wallet.api.response.UserInfoResponse;
 import Wallet.service.CaptchaService;
+import Wallet.service.ChangePhotoService;
 import Wallet.service.UserService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @RestController
 public class ApiUser {
 
     private final UserService userService;
     private final CaptchaService captchaService;
+    private final ChangePhotoService changePhotoService;
 
-    public ApiUser(UserService userService, CaptchaService captchaService) {
+    public ApiUser(UserService userService, CaptchaService captchaService, ChangePhotoService changePhotoService) {
         this.userService = userService;
         this.captchaService = captchaService;
+        this.changePhotoService = changePhotoService;
     }
 
     @PostMapping("/addUser")
@@ -40,5 +44,9 @@ public class ApiUser {
         return userService.userInfo();
     }
 
+    @RequestMapping(path = "/userChangePhoto", method = POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    private Object addImage( @RequestPart(value = "image") MultipartFile image) throws IOException {
+        return changePhotoService.addImage(image);
+    }
 
 }

@@ -33,4 +33,9 @@ public interface UserRepository extends CrudRepository<User, Integer> {
     @Query(value="SELECT * FROM wallet.users where username=?1", nativeQuery = true)
     public List<User> findUserInfo(String username);
 
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE `wallet`.`users` SET `photo` = ?2 WHERE (`username` = ?1);", nativeQuery = true)
+    void changePhotoUser(@Param("userName") String userName, @Param("userPhoto") String userPhoto);
+
 }

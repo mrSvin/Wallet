@@ -42,7 +42,7 @@ public class UserService {
         }
 
         Date date = new Date();
-        userRepository.addUser("1", email, 1, password, "0", date, "ROLE_USER", username);
+        userRepository.addUser("1", email, 1, password, "/upload/userPhoto.png", date, "ROLE_USER", username);
         return "Пользователь зарегистрирован";
     }
 

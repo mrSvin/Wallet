@@ -16,8 +16,28 @@ class Profile extends React.Component {
             },
 
             buttonAvatar: {
-                handleChange: async () => {
+                handleChange: () => {
                     this.state.dropdown == "none" ? this.setState({dropdown: "block"}) : this.setState({dropdown: "none"})
+                }
+            },
+
+            changePhoto: {
+                handleChange: async () => {
+
+                    var input = document.querySelector('input[type="file"]')
+
+                    var data = new FormData()
+                    data.append('image', input.files[0])
+
+                    let response = await fetch('/userChangePhoto', {
+                        method: 'POST',
+                        body: data
+                    })
+
+                    if (response.ok) {
+                        window.location.reload()
+                    }
+
                 }
             }
 
@@ -63,7 +83,7 @@ class Profile extends React.Component {
                 <input
                     className="avatar"
                     type="image"
-                    src="/upload/userProfile/vk.png"
+                    src={this.state.userProfile.photo}
                     alt="Avatar"
                     onClick={this.state.buttonAvatar.handleChange}
                 >
@@ -86,10 +106,11 @@ class Profile extends React.Component {
                             className="inputImage"
                             id="file"
                             type="file"
+                            onChange={this.state.changePhoto.handleChange}
                         />
                         <img
                             className="outputImage"
-                            src="/upload/userProfile/vk.png"
+                            src={this.state.userProfile.photo}
                             id="output"
                             width="200"
                         />
@@ -109,6 +130,10 @@ class Profile extends React.Component {
                     <button
                         className="buttonLogout"
                         type="submit"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            window.location.href='/logout';
+                        }}
                     >Выход
                     </button>
 
