@@ -17,7 +17,7 @@ public class ApiTransactions {
     }
 
     @PostMapping("/transaction")
-    private String addCard(@RequestBody TransactionRequest transactionRequest) {
+    private String transaction(@RequestBody TransactionRequest transactionRequest) {
         return transactionService.transctionCash(transactionRequest.getCardSender(), transactionRequest.getCardRecipient(),
                 transactionRequest.getCashSend());
     }

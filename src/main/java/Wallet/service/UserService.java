@@ -1,6 +1,7 @@
 package Wallet.service;
 
 import Wallet.api.response.UserInfoResponse;
+import Wallet.init.GetUserName;
 import Wallet.model.User;
 import Wallet.repository.CaptchaRepository;
 import Wallet.repository.UserRepository;
@@ -12,7 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class UserService {
+public class UserService extends GetUserName {
 
     private final UserRepository userRepository;
     private final CaptchaRepository captchaRepository;
@@ -62,11 +63,6 @@ public class UserService {
         userInfoResponse.setPhoto(userInfo.get(0).getPhoto());
 
         return  userInfoResponse;
-    }
-
-    private String getUserName() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return authentication.getName();
     }
 
 }

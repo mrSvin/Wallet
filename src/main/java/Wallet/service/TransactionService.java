@@ -1,5 +1,6 @@
 package Wallet.service;
 
+import Wallet.init.GetUserName;
 import Wallet.repository.CardRepository;
 import Wallet.repository.TransctionRepository;
 import org.springframework.security.core.Authentication;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 
 @Service
-public class TransactionService {
+public class TransactionService extends GetUserName {
 
     private final TransctionRepository transctionRepository;
     private final CardRepository cardRepository;
@@ -43,11 +44,6 @@ public class TransactionService {
         //Списываем
         cardRepository.changeMoneyCard(-cashSend, "4375750115309141");
         return "транзакция выполнена";
-    }
-
-    private String getUserName() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return authentication.getName();
     }
 
 }

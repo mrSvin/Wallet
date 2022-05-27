@@ -1,6 +1,7 @@
 package Wallet.service;
 
 import Wallet.api.response.CardsInfoResponse;
+import Wallet.init.GetUserName;
 import Wallet.model.Card;
 import Wallet.repository.CardRepository;
 import org.springframework.security.core.Authentication;
@@ -13,7 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class CardService {
+public class CardService extends GetUserName {
 
     private final CardRepository cardRepository;
 
@@ -79,9 +80,36 @@ public class CardService {
 
     }
 
-    private String getUserName() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return authentication.getName();
+    public String deleteCard(String number) {
+
+        if (getUserName().equals("anonymousUser") == true) {
+            return "пользователь не авторизирован";
+        }
+        if (cardRepository.findCardNumber(number) == 0) {
+            return "Карта отсутствует в базе";
+        }
+        if (cardRepository.findCardNumberUser(number, getUserName()) ==0) {
+            return "Юзер не владеет данной картой";
+        }
+
+        cardRepository.deleteCard(number);
+        return "ok";
+    }
+
+    public String addCashToCard(String number, Integer addCash) {
+
+        if (getUserName().equals("anonymousUser") == true) {
+            return "пользователь не авторизирован";
+        }
+        if (cardRepository.findCardNumberUser(number, getUserName()) ==0) {
+            return "Юзер не владеет данной картой";
+        }
+        if (addCash<0) {
+            return "Отрицательная сумма запрещена";
+        }
+
+        cardRepository.changeMoneyCard(addCash, number);
+        return "ok";
     }
 
 }

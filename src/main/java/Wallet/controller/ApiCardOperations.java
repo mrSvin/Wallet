@@ -32,7 +32,12 @@ public class ApiCardOperations {
 
     @PostMapping("/deleteCard")
     private String deleteCard(@RequestParam(value = "cardNumber") String cardNumber) {
-        return null;
+        return cardService.deleteCard(cardNumber);
+    }
+
+    @PostMapping("/addCash")
+    private String addCashToCard(@RequestParam(value = "cardNumber") String cardNumber, @RequestParam(value = "cash") Integer cash) {
+        return cardService.addCashToCard(cardNumber, cash);
     }
 
 }

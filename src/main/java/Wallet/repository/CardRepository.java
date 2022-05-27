@@ -40,4 +40,9 @@ public interface CardRepository extends CrudRepository<Card, Integer> {
     @Query(value="SELECT cash FROM wallet.cards where number = ?1", nativeQuery = true)
     public Integer balanceCardInfo(String cardNumber);
 
+    @Modifying
+    @Transactional
+    @Query(value = "DELETE FROM `wallet`.`cards` WHERE (`number` = ?1)", nativeQuery = true)
+    void deleteCard(@Param("cardNumber") String cardNumber);
+
 }

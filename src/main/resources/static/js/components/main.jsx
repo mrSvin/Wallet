@@ -1,15 +1,3 @@
-class CardControl extends React.Component {
-
-    render() {
-        return (
-            <div>
-                <h2 className="info">{this.props.cardNumber}</h2>
-            </div>
-        )
-    }
-
-}
-
 class Main extends React.Component {
     constructor() {
         super();
@@ -24,7 +12,7 @@ class Main extends React.Component {
     }
 
     async componentDidMount() {
-        fetch('/userCardsInfo', {
+        await fetch('/userCardsInfo', {
             method: 'POST'
         }).then((response) => {
             return response.json();
@@ -32,7 +20,13 @@ class Main extends React.Component {
             for (var i = 0; i < data.length; i++) {
                 this.setState({cards: data})
             }
-        });
+        }).then((response) => {
+            console.log("number " + this.state.cards[0].number)
+            this.state.choiceCard.value = this.state.cards[0].number
+            this.setState({infoMain: "Информация о карте"})
+
+        })
+
     }
 
     cardClick = (parameter) => () => {
