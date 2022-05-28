@@ -35,7 +35,17 @@ class Profile extends React.Component {
                     })
 
                     if (response.ok) {
-                        window.location.reload()
+                        // window.location.reload()
+                        this.setState({dropdown: "none"});
+                        this.setState({
+                            userProfile: {
+                                name: this.state.userProfile.name,
+                                email: this.state.userProfile.email,
+                                photo: this.state.userProfile.photo,
+                            }
+                        });
+                        this.setState({keyImg: "new"});
+
                     }
 
                 }
@@ -83,7 +93,7 @@ class Profile extends React.Component {
                 <input
                     className="avatar"
                     type="image"
-                    src={this.state.userProfile.photo}
+                    src={`${this.state.userProfile.photo}?${new Date().getTime()}`}
                     alt="Avatar"
                     onClick={this.state.buttonAvatar.handleChange}
                 >
@@ -110,7 +120,7 @@ class Profile extends React.Component {
                         />
                         <img
                             className="outputImage"
-                            src={this.state.userProfile.photo}
+                            src={`${this.state.userProfile.photo}?${new Date().getTime()}`}
                             id="output"
                             width="200"
                         />
