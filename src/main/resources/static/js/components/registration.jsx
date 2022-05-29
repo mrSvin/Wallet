@@ -154,7 +154,7 @@ class Registration extends React.Component {
                 <div className="box registration">
                     <div>
                         <h2>Регистрация успешно завершена!</h2>
-                        <Link to="/">
+                        <Link to="/login">
                             <div
                                 className="btn btn-registration"
                             >

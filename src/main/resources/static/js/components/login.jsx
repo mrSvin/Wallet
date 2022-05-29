@@ -108,13 +108,13 @@ class Login extends React.Component {
                         className="label-block checkbox">
                         Запомнить меня
                     </label>
-                    <div
-                        id="login-btn"
-                        className="btn btn-login"
-                        onClick={this.login.login.loginHandle}
-                    >
-                        Авторизация
-                    </div>
+                        <div
+                            id="login-btn"
+                            className="btn btn-login"
+                            onClick={this.login.login.loginHandle}
+                        >
+                            Авторизация
+                        </div>
                     <Link to="/registration">
                         <div
                             id="registration-btn"

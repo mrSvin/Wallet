@@ -30,7 +30,7 @@ class CardControl extends React.Component {
                     if (response.ok) {
                         let textResponse = (await response.text()).valueOf()
                         console.log(textResponse)
-                        window.location.reload()
+                        props.setChanged()
                     }
 
                 }

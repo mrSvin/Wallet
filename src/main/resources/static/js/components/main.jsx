@@ -1,6 +1,7 @@
 class Main extends React.Component {
     constructor() {
         super();
+        this.setChanged = this.setChanged.bind(this);
         this.state = {
             cards: [],
             infoMain: "Информация о карте",
@@ -44,6 +45,21 @@ class Main extends React.Component {
         this.setState({infoMain: "Добавление карты"})
     }
 
+    setChanged() {
+        fetch('/userCardsInfo', {
+            method: 'POST'
+        }).then((response) => {
+            return response.json();
+        }).then((data) => {
+            for (var i = 0; i < data.length; i++) {
+                this.setState({cards: data})
+            }
+        }).then((response) => {
+            this.state.choiceCard.value = this.state.cards[0].number
+            this.setState({infoMain: "Информация о карте"})
+
+        })
+    }
 
     render() {
         return (
@@ -90,7 +106,7 @@ class Main extends React.Component {
                             <h1 className="info">{this.state.infoMain}</h1>
                         </div>
                         {this.state.infoMain == "Информация о карте" ?
-                            <CardControl cardNumber={this.state.choiceCard.value}/> :
+                            <CardControl setChanged={this.setChanged} cardNumber={this.state.choiceCard.value}/> :
                             <CardAdd/>}
 
                     </main>
