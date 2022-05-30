@@ -44,6 +44,8 @@ class Profile extends React.Component {
                                 photo: this.state.userProfile.photo,
                             }
                         });
+
+                        this.state.userProfile.photo=`${this.state.userProfile.photo}?${new Date().getTime()}`
                         this.setState({keyImg: "new"});
 
                     }
@@ -93,7 +95,7 @@ class Profile extends React.Component {
                 <input
                     className="avatar"
                     type="image"
-                    src={`${this.state.userProfile.photo}?${new Date().getTime()}`}
+                    src={this.state.userProfile.photo}
                     alt="Avatar"
                     onClick={this.state.buttonAvatar.handleChange}
                 >
@@ -120,7 +122,7 @@ class Profile extends React.Component {
                         />
                         <img
                             className="outputImage"
-                            src={`${this.state.userProfile.photo}?${new Date().getTime()}`}
+                            src={this.state.userProfile.photo}
                             id="output"
                             width="200"
                         />

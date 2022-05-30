@@ -1,3 +1,56 @@
+function LoginButton(props) {
+    const history = useHistory();
+    const [error, setError] = useState(0);
+    const [errorMsg, setErrorMsg] = useState('Логин или пароль слишком короткие');
+
+    async function handleClick() {
+        if (props.login.username.value.length >= 3 && props.login.password.value.length >= 3) {
+            let response = await fetch('/login?' + "username=" + props.login.username.value + "&password=" +
+                props.login.password.value + "&remember-me=" + props.login.remember.value, {
+                method: 'POST',
+            })
+            if (response.ok) {
+                setError(0)
+                setTimeout(() => {
+                    let badLogin = window.location.protocol + '//' + window.location.hostname + ":8082/login?error";
+                    if (response.url != badLogin) {
+                        history.push("/");
+                    } else {
+                        setErrorMsg('Логин или пароль введены не верно')
+                        setError(1)
+                    }
+                }, 100)
+
+
+            }
+        } else {
+            setErrorMsg('Логин или пароль слишком короткие')
+            setError(1)
+        }
+
+
+    }
+
+    let errormessage =
+        <p
+            id="errorMsg"
+            className="error-msg"> {errorMsg}
+        </p>
+
+    return (
+        <div>
+            {error == 1 ? errormessage : null}
+            <div
+                id="login-btn"
+                className="btn btn-login"
+                onClick={handleClick}
+            >
+                Авторизация
+            </div>
+        </div>
+    );
+}
+
 class Login extends React.Component {
     constructor(props) {
         super(props);
@@ -26,43 +79,6 @@ class Login extends React.Component {
                 }
             },
 
-
-            login: {
-                loginHandle: async () => {
-                    if (this.login.username.value.length >= 3 && this.login.password.value.length >= 3) {
-
-                        let response = await fetch('/login?' + "username=" + this.login.username.value + "&password=" +
-                            this.login.password.value + "&remember-me=" + this.login.remember.value, {
-                            method: 'POST',
-                        })
-
-                        if (response.ok) {
-                            this.setState({permission: 0, error: 0});
-                            document.getElementById("login-btn").style.display = "none";
-                            document.getElementById("registration-btn").style.display = "none";
-
-                            setTimeout(() => {
-                                let badLogin = window.location.protocol + '//' + window.location.hostname + ":8082/login?error";
-                                if (response.url != badLogin) {
-                                    window.location.href = "/"
-                                } else {
-                                    this.setState({permission: 0, error: 1});
-                                    document.getElementById("errorMsg").innerHTML = "Логин или пароль введены не верно"
-                                }
-                                document.getElementById("login-btn").style.display = "block";
-                                document.getElementById("registration-btn").style.display = "block";
-                            }, 100);
-
-                        }
-
-                    } else {
-                        this.setState({permission: 0, error: 1});
-                        document.getElementById("errorMsg").innerHTML = "Логин или пароль слишком короткие"
-                    }
-                }
-            },
-
-
             registration: {
                 value: "",
                 registrationHandle: () => {
@@ -73,12 +89,9 @@ class Login extends React.Component {
         };
     }
 
+
     render() {
-        let errormessage =
-            <p
-                id="errorMsg"
-                class="error-msg"> Логин или пароль слишком короткие
-            </p>;
+
         return (
             <div className="box login">
                 <div>
@@ -95,7 +108,6 @@ class Login extends React.Component {
                         placeholder="Password"
                         onChange={this.login.password.handleChange}
                     />
-                    {this.state.error ? errormessage : null}
                     <input
                         id="abc"
                         name="remember"
@@ -108,13 +120,9 @@ class Login extends React.Component {
                         className="label-block checkbox">
                         Запомнить меня
                     </label>
-                        <div
-                            id="login-btn"
-                            className="btn btn-login"
-                            onClick={this.login.login.loginHandle}
-                        >
-                            Авторизация
-                        </div>
+
+                    <LoginButton login={this.login}/>
+
                     <Link to="/registration">
                         <div
                             id="registration-btn"

@@ -2,8 +2,13 @@ const {
     BrowserRouter,
     Switch,
     Route,
-    Link
+    Link,
+    useHistory,
 } = ReactRouterDOM
+
+const {
+    useState
+} = React
 
 const App = () => (
     <BrowserRouter>
@@ -15,10 +20,14 @@ const App = () => (
             <Route path="/registration">
                 <Registration/>
             </Route>
+
+            <Route path="/">
+                <Main/>
+            </Route>
+
         </Switch>
-        {/*<Route exact path="/" component={Login}/>*/}
-        {/*<Route path="/registration" component={Registration}/>*/}
+
     </BrowserRouter>
 );
 
-ReactDOM.render(<App/>, document.getElementById('login-app'));
+ReactDOM.render(<App/>, document.getElementById('main-app'));
