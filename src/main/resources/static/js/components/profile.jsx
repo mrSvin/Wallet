@@ -1,3 +1,23 @@
+function LogoutButton(props) {
+    const history = useHistory();
+
+    function handleClick() {
+        fetch('/logout', {
+            method: 'GET',
+        })
+        history.push("/login?logout");
+    }
+
+    return (
+        <button
+            className="buttonLogout"
+            type="submit"
+            onClick={handleClick}
+        >Выход
+        </button>
+    );
+}
+
 class Profile extends React.Component {
 
     constructor() {
@@ -139,15 +159,7 @@ class Profile extends React.Component {
                         {this.state.userProfile.email}
                     </p>
 
-                    <button
-                        className="buttonLogout"
-                        type="submit"
-                        onClick={(e) => {
-                            e.preventDefault();
-                            window.location.href='/logout';
-                        }}
-                    >Выход
-                    </button>
+                    <LogoutButton/>
 
                 </div>
             </div>
