@@ -82,6 +82,8 @@ public class CardService extends GetUserName {
 
     public String deleteCard(String number) {
 
+        number=number.replaceAll("_"," ");
+
         if (getUserName().equals("anonymousUser") == true) {
             return "пользователь не авторизирован";
         }
@@ -91,7 +93,6 @@ public class CardService extends GetUserName {
         if (cardRepository.findCardNumberUser(number, getUserName()) ==0) {
             return "Юзер не владеет данной картой";
         }
-
         cardRepository.deleteCard(number);
         return "ok";
     }
