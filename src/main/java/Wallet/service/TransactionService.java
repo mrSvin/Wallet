@@ -23,6 +23,7 @@ public class TransactionService extends GetUserName {
     public String transctionCash(String sender, String recipient, Integer cashSend) {
 
         String username = getUserName();
+        sender=sender.replaceAll("_"," ");
 
         if (username.equals("anonymousUser") == true) {
             return "пользователь не авторизирован";
@@ -40,9 +41,11 @@ public class TransactionService extends GetUserName {
         Date date = new Date();
         transctionRepository.addTransaction(recipient,sender, date, cashSend);
         //Отправляем
-         cardRepository.changeMoneyCard(cashSend, "4375750115309142");
+         cardRepository.changeMoneyCard(cashSend, recipient);
         //Списываем
-        cardRepository.changeMoneyCard(-cashSend, "4375750115309141");
+        cardRepository.changeMoneyCard(-cashSend, sender);
+
+        System.out.println("Произведена транзакция от " + sender + " к " + recipient + " сумма: " + cashSend);
         return "транзакция выполнена";
     }
 

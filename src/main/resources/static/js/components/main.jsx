@@ -55,7 +55,6 @@ class Main extends React.Component {
                 this.setState({cards: data})
             }
         }).then((response) => {
-            this.state.choiceCard.value = this.state.cards[0].number
             this.setState({infoMain: "Информация о карте"})
 
         })

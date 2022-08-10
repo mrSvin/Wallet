@@ -33,7 +33,26 @@ function CardControl({setChanged, cardNumber}) {
     }
 
     async function sendMoney() {
+        let cardNumberNoSpace = cardNumber.replaceAll(" ","_");
 
+        var bodyJson = JSON.stringify({
+            cardSender: cardNumberNoSpace,
+            cardRecipient: cardSend,
+            cashSend: moneySend,
+        });
+
+        let response = await fetch(`/transaction`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: bodyJson
+        })
+        if (response.ok) {
+            let textResponse = (await response.text()).valueOf()
+            console.log(textResponse)
+            setChanged()
+        } else {
+            console.log('транзакция не выполнена')
+        }
     }
 
 
@@ -93,11 +112,14 @@ function CardControl({setChanged, cardNumber}) {
                         <h1 className="infoOperation">Выполнение транзакции</h1>
                         <input
                             className="inputAddCardSend"
-                            maxLength="16"
+                            maxLength="19"
                             placeholder="Введите карту для перевода"
                             onKeyPress={(event) => {
                                 if (!/[0-9]/.test(event.key)) {
                                     event.preventDefault();
+                                }
+                                if (((event.target.value.length + 1) % 5) === 0 && event.target.value.length<=18) {
+                                    event.target.value = event.target.value + " ";
                                 }
                             }}
                             onChange={event => setCardSend(event.target.value)}
